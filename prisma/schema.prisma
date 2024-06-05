@@ -1,0 +1,163 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  emailVerified DateTime?
+  name      String?
+  hashedPassword  String?
+  image     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  
+  adresses  Adress[]
+  cartItems CartItem[]
+  orders    Order[]
+  reviews   Review[]
+  session   Session[]
+  accounts  Account[]
+}
+
+model Session {
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+ 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Account {
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+ 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+ 
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+ 
+  @@id([provider, providerAccountId])
+}
+
+model Product {
+  id          String   @id @default(cuid())
+  name        String
+  description String
+  price       Float
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  reviews     Review[]
+  categories  ProductCategory[]
+  cartItems   CartItem[]
+  orders      Order[]
+  orderItems  OrderItem[]
+}
+
+model Review {
+  id          String   @id @default(cuid())
+  title       String
+  comment     String
+  rating      Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+  productId   String
+  product     Product  @relation(fields: [productId], references: [id])
+}
+
+model Category {
+  id          String   @id @default(cuid())
+  name        String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  products    ProductCategory[]
+}
+
+model ProductCategory {
+  productId   String
+  product     Product  @relation(fields: [productId], references: [id])
+  categoryId  String
+  category    Category @relation(fields: [categoryId], references: [id])
+
+  @@id([productId, categoryId])
+}
+
+model CartItem {
+  id          String   @id @default(cuid())
+  quantity    Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+  productId   String
+  product     Product  @relation(fields: [productId], references: [id])
+}
+
+model Order {
+  id          String   @id @default(cuid())
+  total       Float
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+  products    Product[]
+  items       OrderItem[]
+}
+
+model OrderItem {
+  id          String   @id @default(cuid())
+  quantity    Int
+  price       Float
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  orderId     String
+  order       Order    @relation(fields: [orderId], references: [id])
+  productId   String
+  product     Product  @relation(fields: [productId], references: [id])
+}
+
+model Adress {
+  id          String   @id @default(cuid())
+  street      String
+  city        String
+  state       String
+  zip         String
+  country     String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+}
+
