@@ -9,8 +9,8 @@ import ToasterProvider from "./providers/ToasterProvider";
 import getCurrentUser from "./actions/getCurrentUser";
 
 export const metadata: Metadata = {
-  title: "Kanapos",
-  description: "Kanapos, leader des canapés dans ton village.",
+  title: "ProFlex",
+  description: "Boostez Votre Performance, Libérez Votre Potentiel",
 };
 
 const font = Nunito({

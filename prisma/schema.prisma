@@ -71,11 +71,41 @@ model Product {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
+  trending    ProductTrending[]
+  productType ProductType[]
+  images      Image[]
   reviews     Review[]
   categories  ProductCategory[]
   cartItems   CartItem[]
   orders      Order[]
   orderItems  OrderItem[]
+}
+
+model ProductTrending {
+  id          String   @id @default(cuid())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  product    Product[]
+}
+
+model ProductType {
+  id          String   @id @default(cuid())
+  name        String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  products    Product[]
+}
+
+model Image {
+  id          String   @id @default(cuid())
+  url         String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  productId   String
+  product     Product  @relation(fields: [productId], references: [id])
 }
 
 model Review {
@@ -95,6 +125,7 @@ model Review {
 model Category {
   id          String   @id @default(cuid())
   name        String
+  image       String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 

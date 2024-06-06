@@ -6,8 +6,8 @@ import UserMenu from "./UserMenu";
 import CartItem from "./CartItem";
 import Avatar from "./Avatar";
 import { Heart, ShoppingCart } from 'lucide-react';
-import prisma from "@/app/libs/prismadb";
 
+import { useRouter } from "next/navigation";
 import { SafeUser } from "@/app/types";
 
 
@@ -21,6 +21,7 @@ const Navbar: React.FC<NavbarProps> = ({
     
     const [isUserOpen, setIsUserOpen] = useState(false);
     const [isCartOpen, setIsCartOpen] = useState(false);
+    const router = useRouter();
 
     const closeAll = () => {
         setIsUserOpen(false);
@@ -56,8 +57,9 @@ const Navbar: React.FC<NavbarProps> = ({
                     font-bold
                     text-gray-800
                     md:text-3xl
+                    cursor-pointer
                 ">
-                <a href="#">Kanapos</a>
+                <div onClick={() => router.push("/")}>ProFlex</div>
             </div>
             <div className="
                     absolute

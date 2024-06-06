@@ -12,7 +12,7 @@ const Avatar: React.FC<AvatarProps> = ({ image }) => {
             {image? (
                 <img
                     src={image}
-                    alt="User Avatar"
+                    alt=""
                     className="
                         w-9
                         h-9

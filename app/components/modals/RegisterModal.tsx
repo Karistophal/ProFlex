@@ -54,7 +54,7 @@ const RegisterModal = () => {
             });
     }
 
-    const handleSwitchToLogin = () => {
+    const toggle = () => {
         registerModal.onClose();
         loginModal.onOpen();
     }
@@ -117,7 +117,7 @@ const RegisterModal = () => {
                     Already have an account?
                 </div>
                 <button
-                    onClick={handleSwitchToLogin}
+                    onClick={toggle}
                     className='
                         text-neutral-700
                         hover:underline
