@@ -2,8 +2,10 @@ import type { Metadata } from "next";
 import { Nunito } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/navbar/Navbar";
+import Footer from "./components/footer/Footer";
 import RegisterModal from "./components/modals/RegisterModal";
 import LoginModal from "./components/modals/LoginModal";
+
 import ToasterProvider from "./providers/ToasterProvider";
 
 import getCurrentUser from "./actions/getCurrentUser";
@@ -36,6 +38,7 @@ export default async function RootLayout({
         <LoginModal />
         <Navbar currentUser={currentUser}/>
         {children}
+        <Footer />
       </body>
     </html>
   );

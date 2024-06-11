@@ -25,6 +25,7 @@ const UserMenu: React.FC<UserMenuProps> = ({
     return (
         <div className="
         absolute
+        z-50
         top-12
         right-0
         w-40

@@ -3,13 +3,16 @@ import { useRouter } from "next/navigation";
 
 import Category from "./components/home/category/Category";
 import Redirect from "./components/home/Redirect";
-import Product from "./components/products/Product";
+import Product from "./components/product/Product";
 
 import getAllCategory from "./actions/getAllCategory";
+import getTrending from "./actions/getTrending"
 
 export default async function Home() {
 
   const categories = await getAllCategory();
+  const trending = await getTrending();
+  
 
   return (
     <div className="flex flex-col items-center min-h-screen px-4 py-10 gap-12">
@@ -43,27 +46,9 @@ export default async function Home() {
           <Redirect name="View more" url="/trending" underline />
         </div>
         <div className="w-full flex gap-4">
-          <Product
-            name="Product 1"
-            price={100}
-            image="https://via.placeholder.com/150"
-            types={["Type 1", "Type 2", "Type 3"]}
-            reviews={4}
-          />
-          <Product
-            name="Product 2"
-            price={200}
-            image="https://via.placeholder.com/150"
-            types={["Type 1", "Type 2", "Type 3"]}
-            reviews={4}
-          />
-          <Product
-            name="Product 3"
-            price={300}
-            image="https://via.placeholder.com/150"
-            types={["Type 1", "Type 2", "Type 3"]}
-            reviews={4}
-          />
+          {trending?.map((trend: any) => (
+            <Product key={trend.id} id={trend.product.id} name={trend.product.name} image={trend.product.images} price={trend.product.price} reviews={trend.product.reviews} />
+          ))}
         </div>
       </div>
 

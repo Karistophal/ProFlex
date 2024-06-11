@@ -68,7 +68,7 @@ const Navbar: React.FC<NavbarProps> = ({
                     transform
                     -translate-x-1/2
                     -translate-y-1/2
-                    hidden
+                    overflow-hidden
                     flex
                     items-center
                     gap-4
@@ -149,6 +149,7 @@ const Navbar: React.FC<NavbarProps> = ({
                                 flex-col
                                 gap-2
                                 p-4
+                                z-100
                             ">
                             <div>Mon panier</div>
                             <CartItem

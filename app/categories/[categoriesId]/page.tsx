@@ -3,7 +3,7 @@ import React from "react";
 
 import getCategoryProducts from "../../actions/getCategoryProducts";
 
-import Product from "@/app/components/products/Product";
+import Product from "@/app/components/product/Product";
 
 interface IParams {
     categoriesId?: string;
@@ -15,19 +15,27 @@ const CategoryPage = async ({ params }: { params: IParams }) => {
 
     const products = await getCategoryProducts(params.categoriesId);
     if (!products) return null;
-        
+
+
+
     return (
-        <div>
-            {products.map((product) => (
-                <Product
-                    key={product.id}
-                    name={product.name}
-                    price={product.price}
-                    {...product.images[0] && { image: product.images[0].url }}
-                    types={product.productType}
-                    reviews={product.reviews}
-                />
-            ))}
+        <div className="flex flex-col justify-center m-10">
+            <div className="w-full text-4xl font-bold text-center">
+                Découvrez nos produits de {params.categoriesId}
+            </div>
+            <div className="px-32 pt-8">
+                {products.map((product) => (
+                    <Product
+                        key={product.id}
+                        id={product.id}
+                        name={product.name}
+                        price={product.price}
+                        image={product.images}
+                        types={product.productType}
+                        reviews={product.reviews}
+                    />
+                ))}
+            </div>
         </div>
     );
 }
