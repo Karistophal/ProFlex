@@ -61,8 +61,9 @@ export async function POST(
         data: {
             quantity: quantity || 1,
             productId: productId,
-            userId: user.id
-        }
+            userId: user.id,
+            productTypeId: 'clx70jz3v000097e1v5yjh0vz'
+        },
     });
     return NextResponse.json({ message: "Cart updated" });
 

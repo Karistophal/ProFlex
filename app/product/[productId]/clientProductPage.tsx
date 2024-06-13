@@ -40,7 +40,7 @@ const ClientProductPage: React.FC<clientProductPageProps> = ({
   const [productQuantity, setProductQuantity] = useState<number>(1);
   const [mainImage, setMainImage] = useState(product.images[0]?.url || '');
   const [currentImage, setCurrentImage] = useState(product.images[0]?.url || '');
-  const [selectedType, setSelectedType] = useState<string>('' || product.productType[0].name);
+  const [selectedType, setSelectedType] = useState<string>('' || product.productType[0]?.name);
   const [reviews, setReviews] = useState<ReviewWithUser[]>(product.reviews);
   const loginModal = useLoginModal();
 

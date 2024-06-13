@@ -1,6 +1,6 @@
-'use client';
+'use client'
 
-import { LucideProps  } from 'lucide-react';
+import { LucideProps } from 'lucide-react';
 import React from 'react';
 
 interface ButtonProps {
@@ -18,7 +18,7 @@ const Button: React.FC<ButtonProps> = ({
     disabled,
     outline,
     small,
-    icon : Icon
+    icon: Icon
 }) => {
     return (
         <button
@@ -33,12 +33,12 @@ const Button: React.FC<ButtonProps> = ({
                 hover:opacity-80
                 transition
                 border-2
-                ${outline ? "border-black text-black ": "border-blue-500 bg-blue-500 text-white"}
+                ${outline ? "border-black text-black" : "border-blue-500 bg-blue-500 text-white"}
                 ${small ? "py-2 px-4 text-sm" : "py-3 px-6 text-base"}
             `}
         >
             {Icon && (
-                <Icon size = {24} className="absolute left-4" />
+                <Icon size={24} className="absolute left-4" />
             )}
             {label}
         </button>

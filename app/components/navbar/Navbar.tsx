@@ -3,10 +3,11 @@
 import React, { use, useState, useEffect } from "react";
 import SearchBar from "./SearchBar";
 import UserMenu from "./UserMenu";
-import CartItem from "./CartItem";
+import CartMenu from "./CartMenu";
 import Avatar from "./Avatar";
 import { Heart, ShoppingCart } from 'lucide-react';
 
+import useLoginModal from "../../hook/useLoginModal";
 import { useRouter } from "next/navigation";
 import { SafeUser } from "@/app/types";
 
@@ -22,6 +23,7 @@ const Navbar: React.FC<NavbarProps> = ({
     const [isUserOpen, setIsUserOpen] = useState(false);
     const [isCartOpen, setIsCartOpen] = useState(false);
     const router = useRouter();
+    const loginModal = useLoginModal();
 
     const closeAll = () => {
         setIsUserOpen(false);
@@ -35,7 +37,15 @@ const Navbar: React.FC<NavbarProps> = ({
 
     const toggleCart = () => {
         closeAll();
+        if (!currentUser) {
+            
+        }
         setIsCartOpen(!isCartOpen);
+    }
+
+    const handleConnect = () => {
+        closeAll();
+        loginModal.onOpen();
     }
 
     return (
@@ -135,35 +145,10 @@ const Navbar: React.FC<NavbarProps> = ({
                         cursor-pointer
                     ">
                     <ShoppingCart strokeWidth={2.5} />
-                    {isCartOpen &&
-                        <div
-                            className="
-                                absolute
-                                top-12
-                                right-0
-                                w-40
-                                bg-white
-                                shadow-lg
-                                rounded-lg
-                                flex
-                                flex-col
-                                gap-2
-                                p-4
-                                z-100
-                            ">
-                            <div>Mon panier</div>
-                            <CartItem
-                                img="https://via.placeholder.com/150"
-                                name="Product"
-                                style="Style"
-                                price={100}
-                                quantity={1}
-                            />
-                        </div>
-                    }
-
-
                 </div>
+                {isCartOpen &&
+                    <CartMenu currentUser={currentUser} handleConnect={handleConnect} />
+                }
             </div>
         </nav>
     );

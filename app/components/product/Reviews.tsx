@@ -19,14 +19,14 @@ interface Product {
     images: { url: string }[];
     productType: { name: string }[];
     reviews: ReviewWithUser[];
-  }
-  interface ReviewWithUser extends Review {
+}
+interface ReviewWithUser extends Review {
     user: {
-      name: string | null;
-      email: string;
-      createdAt: Date;
+        name: string | null;
+        email: string;
+        createdAt: Date;
     }
-  }
+}
 interface ReviewsProps {
     product: Product;
 }
@@ -92,26 +92,32 @@ const Reviews: React.FC<ReviewsProps> = ({ product }) => {
                 </select>
             </div>
             <div className="bg-gray-50 rounded-3xl p-10 flex flex-col gap-4">
-                {reviews.map((review, index) => (
-                    <div key={index} className="flex flex-col gap-1">
-                        <div className="flex justify-between w-full gap-8">
-                            <div className="flex gap-2 items-center">
-                                <p className="text-dark text-lg font-bold">{review.user.name}</p>
-                                <p className="text-gray-500 text-sm">{timeAgo(review.createdAt.toString())}</p>
+                {reviews.length > 0 ? (
+                    reviews.map((review, index) => (
+                        <div key={index} className="flex flex-col gap-1">
+                            <div className="flex justify-between w-full gap-8">
+                                <div className="flex gap-2 items-center">
+                                    <p className="text-dark text-lg font-bold">{review.user.name}</p>
+                                    <p className="text-gray-500 text-sm">{timeAgo(review.createdAt.toString())}</p>
+                                </div>
+                                <ReviewStars reviews={[review]} size={18} />
                             </div>
-                            <ReviewStars reviews={[review]} size={18} />
-                        </div>
 
-                        <div className="mx-4 my-2">
-                            <p className="text-dark font-bold ">{review.title}</p>
-                            <p className="text-gray-500">{review.comment}</p>
+                            <div className="mx-4 my-2">
+                                <p className="text-dark font-bold ">{review.title}</p>
+                                <p className="text-gray-500">{review.comment}</p>
+                            </div>
+                            {index < reviews.length - 1 && <Hr />}
                         </div>
-                        {index < reviews.length - 1 && <Hr />}
-                    </div>
-                ))}
-                <div className="flex justify-center cursor-pointer text-gray-500 font-semibold text-lg"
-                    onClick={handleViewMore}
+                    ))
+                ) : (
+                    <div className="text-center text-gray-500 text-xl font-bold">Il n'y a aucun avis</div>
+                )}
+                {reviews.length !== 0 && (
+                    <div className="flex justify-center cursor-pointer text-gray-500 font-semibold text-lg"
+                        onClick={handleViewMore}
                     >Voir plus...</div>
+                )}
             </div>
         </div>
     );

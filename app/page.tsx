@@ -1,5 +1,4 @@
 import React from "react";
-import { useRouter } from "next/navigation";
 
 import Category from "./components/home/category/Category";
 import Redirect from "./components/home/Redirect";

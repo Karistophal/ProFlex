@@ -20,8 +20,6 @@ const font = Nunito({
 });
 
 
-
-
 export default async function RootLayout({
   children,
 }: Readonly<{
@@ -38,7 +36,7 @@ export default async function RootLayout({
         <LoginModal />
         <Navbar currentUser={currentUser}/>
         {children}
-        <Footer />
+        {/* <Footer /> */}
       </body>
     </html>
   );

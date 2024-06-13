@@ -1,57 +1,44 @@
-'use client';
+"use client";
+
+import React from 'react';
+import { Trash2 } from 'lucide-react';
+import { CartItem } from '@/app/types';
 
 interface CartItemProps {
-    img: string;
-    name: string;
-    style: string;
-    price: number;
-    quantity: number;
+    cartItems: CartItem;
+    onDelete: () => void; 
 }
 
 
-const CartItem: React.FC<CartItemProps> = ({
-    img,
-    name,
-    style,
-    price,
-    quantity
+const CartItemSmall: React.FC<CartItemProps> = ({
+    cartItems,
+    onDelete
 }) => {
+    const handleDelete = () => {
+        onDelete();
+    };
+
+    const { product, quantity } = cartItems;
+    const { name, price, images } = product;
+    const img = images[0].url;
+
     return (
-        <div className="
-            flex
-            items-center
-            gap-4
-            p-4
-            border-b
-            border-gray-200
-        ">
-            <img src={img} alt="" className="
-                w-20
-                h-20
-                object-cover
-                rounded-lg
-            " />
-            <div className="
-                flex
-                flex-col
-                gap-1
-            ">
-                <div className="font-semibold">
-                    {name}
+        <div className="relative flex items-center gap-4 p-2 px-4 bg-gray-100 rounded-lg">
+            <img src={img} alt={name} className="w-28 h-20 object-cover rounded-lg" />
+            <div className="flex flex-col justify-between flex-1">
+                <div className="flex flex-col mb-2">
+                    <div className="font-semibold">{name}</div>
                 </div>
-                <div className="text-neutral-500">
-                    {style}
-                </div>
-                <div className="text-neutral-500">
-                    {price}
-                </div>
-                <div className="text-neutral-500">
-                    Quantity: {quantity}
+                <div className="flex">
+                    <div className="text-neutral-500 mr-2">{price} $</div>
+                    <div className="text-neutral-500">x {quantity}</div>
                 </div>
             </div>
+            <div className="absolute right-4 cursor-pointer text-red-500" onClick={handleDelete}>
+                <Trash2 size={20} />
+            </div>
         </div>
-
     );
-}
+};
 
-export default CartItem;
+export default CartItemSmall;
