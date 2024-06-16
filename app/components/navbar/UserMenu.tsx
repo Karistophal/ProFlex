@@ -9,10 +9,12 @@ import useLoginModal from "../../hook/useLoginModal";
 
 interface UserMenuProps {
     currentUser?: SafeUser | null;
+    closeUserMenu: () => void;
 }
 
 const UserMenu: React.FC<UserMenuProps> = ({
-    currentUser
+    currentUser,
+    closeUserMenu
 }) => {
     const registerModal = useRegisterModal();
     const loginModal = useLoginModal();
@@ -23,30 +25,17 @@ const UserMenu: React.FC<UserMenuProps> = ({
         
 
     return (
-        <div className="
-        absolute
-        z-50
-        top-12
-        right-0
-        w-40
-        bg-white
-        shadow-lg
-        rounded-lg
-        flex
-        flex-col
-        gap-2
-        p-4
-    ">
+        <div onMouseLeave={() => closeUserMenu()} className="absolute z-50 top-12 right-0 w-40 bg-white shadow-lg rounded-lg flex flex-col gap-2 p-4">
             {currentUser ? (
                 <>
-                    <MenuItem label="Profile" onClick={() => {}} />
+                    <MenuItem label="Profil" onClick={() => {}} />
                     <Hr />
-                    <MenuItem label="Logout" onClick={handleLogout} />
+                    <MenuItem label="Déconnexion" onClick={handleLogout} />
                 </>
             ) : (
                 <>
-                    <MenuItem label="Register" onClick={registerModal.onOpen} />
-                    <MenuItem label="Login" onClick={loginModal.onOpen} />
+                    <MenuItem label="Inscription" onClick={registerModal.onOpen} />
+                    <MenuItem label="Connexion" onClick={loginModal.onOpen} />
                 </>)}
         </div>
     );

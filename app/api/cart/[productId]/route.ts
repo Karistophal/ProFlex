@@ -10,22 +10,24 @@ interface IParams {
 export async function POST(
     req: Request,
     { params }: { params: IParams }
-) {    
+) {
     const user = await getCurrentUser()
-    
 
     if (!user) {
         return NextResponse.json({ message: "You need to be logged in to add to cart" }, { status: 401 });
     }
 
+
+
     const { productId } = params;
-    const { quantity } = await req.json();
+    const { quantity, selectedType } = await req.json();   
     
-    
+
+
     if (!productId) {
         return NextResponse.json({ message: "Product ID is required" }, { status: 400 });
     }
-    
+
 
     // Check if product exists
     const product = await prisma.product.findUnique({
@@ -36,15 +38,16 @@ export async function POST(
     if (!product) {
         return NextResponse.json({ message: "Product not found" }, { status: 404 });
     }
-    // Check if cartItem exists
-    const cartItem =
-        await prisma.cartItem.findFirst({
-            where: {
-                productId: productId,
-                userId: user.id
-            }
-        });
-    // If cartItem exists, update quantity
+    // verifier si CartItem existe
+    const cartItem = await prisma.cartItem.findFirst({
+        where: {
+            productId: productId,
+            ...(selectedType && { productTypeId: selectedType }), // si selectedType existe
+            userId: user.id
+        }
+    });
+
+    // si cartItem existe, actualiser la quantité
     if (cartItem) {
         await prisma.cartItem.update({
             where: {
@@ -56,15 +59,16 @@ export async function POST(
         });
         return NextResponse.json({ message: "Cart updated" });
     }
-    // If cartItem does not exist, create new cartItem
+    // si cartItem n'existe pas, créer un nouveau
     await prisma.cartItem.create({
         data: {
             quantity: quantity || 1,
             productId: productId,
             userId: user.id,
-            productTypeId: 'clx70jz3v000097e1v5yjh0vz'
+            ...(selectedType && { productTypeId: selectedType }),
         },
     });
     return NextResponse.json({ message: "Cart updated" });
+
 
 }

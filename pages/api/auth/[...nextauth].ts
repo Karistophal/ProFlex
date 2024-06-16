@@ -8,6 +8,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcrypt";
 
 import prisma from "@/app/libs/prismadb";
+import { stripe } from "@/app/libs/stripe";
 
 export const authOptions: AuthOptions = {
     adapter: PrismaAdapter(prisma),
@@ -61,6 +62,31 @@ export const authOptions: AuthOptions = {
     debug: process.env.NODE_ENV === 'development',
     session: {
         strategy: 'jwt',
+    },
+    events: {
+        createUser: async (message) => {
+            const userId = message.user.id;
+            const email = message.user.email;
+            const name = message.user.name;
+
+            if (!userId || !email) {
+                return;
+            }
+
+            const stripeCustomer = await stripe.customers.create({
+                email: email,
+                name: name ?? undefined,
+            });
+
+            await prisma.user.update({
+                where: {
+                    id: userId,
+                },
+                data: {
+                    stripeCustomerId: stripeCustomer.id,
+                },
+            });
+        }
     },
     secret: process.env.NEXTAUTH_SECRET,
 };

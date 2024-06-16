@@ -26,7 +26,7 @@ interface ReviewStarsProps {
 
 const ReviewStars = ({ reviews, size = 16, onClick, reviewCounter }: ReviewStarsProps) => {
     const avgReview = reviews && reviews.length > 0 ? reviews.reduce((acc, review) => acc + review.rating, 0) / reviews.length : 0;
-
+    
     return (
         <div className={`flex items-center gap-0.5`} onClick={onClick}>
             {Array.from({ length: Math.floor(avgReview) }, (_, i) => (

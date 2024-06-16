@@ -18,7 +18,7 @@ const ServerProductPage = async ({ params }: { params: IParams }) => {
   if (!product) return null;
 
 
-  return <ClientProductPage product={product} user={currentUser} />;
+  return <ClientProductPage product={product}/>;
 };
 
 export default ServerProductPage;

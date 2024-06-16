@@ -14,7 +14,7 @@ const Category: React.FC<CategoryProps> = ({ name, img }) => {
 
     return (
         <div 
-            className="relative w-44 h-44 bg-neutral-300 rounded-lg flex flex-col items-center justify-between cursor-pointer overflow-hidden"
+            className="relative w-44 h-full bg-neutral-300 rounded-lg flex flex-col items-center justify-between cursor-pointer overflow-hidden"
             onClick={() => router.push(`/categories/${name}`)}
         >
             <img src={img} alt="" className="w-full h-full object-cover" />

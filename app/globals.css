@@ -28,7 +28,13 @@ html, body, #root {
 body {
   background-color: var(--background-color);
   color: var(--text-color);
-  padding: 10px 70px;
+}
+
+@media screen and (max-width: 768px) {
+  body {
+    padding: 10px 20px;
+  }
+  
 }
 
 ul {

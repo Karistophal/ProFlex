@@ -47,12 +47,12 @@ const LoginModal = () => {
             setIsLoading(false);
 
             if (callback?.ok) {
-                toast.success('Logged in successfully');
+                toast.success('Connecté avec succès');
                 router.refresh();
                 LoginModal.onClose();
             }
             else {
-                toast.error('User not found');
+                toast.error('Erreur lors de la connexion');
             }
         
         })
@@ -67,7 +67,7 @@ const LoginModal = () => {
 
     const bodyContent = (
         <div className='flex flex-col gap-4'>
-            <Heading title='Welcome back' subtitle='Login to your account !' />
+            <Heading title='Heureux de vous revoir !' subtitle='Connectez-vous pour continuer' />
             <Input
                 id='email'
                 label='Email'
@@ -78,7 +78,7 @@ const LoginModal = () => {
             />
             <Input
                 id='password'
-                label='Password'
+                label='Mot de passe'
                 type='password'
                 required
                 register={register}
@@ -91,13 +91,13 @@ const LoginModal = () => {
         <div className='flex flex-col gap-4 mt-3'>
             <Button
                 outline
-                label='Continue with Google'
+                label='Continuer avec Google'
                 icon={FcGoogle}
                 onClick={() => signIn('google')}
             />
             <Button
                 outline
-                label='Continue with Apple'
+                label='Continuer avec Apple'
                 icon={GrApple}
                 onClick={() => signIn('apple')}
             />
@@ -112,7 +112,7 @@ const LoginModal = () => {
                 justify-center
             '>
                 <div >
-                    Don't have an account?
+                    Vous n'avez pas de compte ?
                 </div>
                 <button
                     onClick={toggle}
@@ -122,7 +122,7 @@ const LoginModal = () => {
                         focus:outline-none
                     '
                 >
-                    Register
+                    S'inscrire
                 </button>
             </div>
         </div>
@@ -132,8 +132,8 @@ const LoginModal = () => {
         <Modal
             disabled={isLoading}
             isOpen={LoginModal.isOpen}
-            title="Login"
-            actionLabel="Login"
+            title="Connexion"
+            actionLabel="Se connecter"
             onClose={LoginModal.onClose}
             onSubmit={handleSubmit(onSubmit)}
             body={bodyContent}

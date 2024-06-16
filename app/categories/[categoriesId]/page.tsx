@@ -21,7 +21,7 @@ const CategoryPage = async ({ params }: { params: IParams }) => {
     return (
         <div className="flex flex-col justify-center m-10">
             <div className="w-full text-4xl font-bold text-center">
-                Découvrez nos produits de {params.categoriesId}
+                Découvrez nos produits de {decodeURIComponent(params.categoriesId)}
             </div>
             <div className="px-32 pt-8">
                 {products.map((product) => (

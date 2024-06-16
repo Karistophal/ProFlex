@@ -21,8 +21,7 @@ export default async function getProduct(id: string) {
                 },
                 orderBy: {
                     rating: "desc"
-                },
-                take: 1
+                }
             },
             productType: true,
         }

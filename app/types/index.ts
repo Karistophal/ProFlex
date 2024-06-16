@@ -15,10 +15,17 @@ export type CartItem = {
     updatedAt: Date;
     userId: string;
     productId: string;
+    productTypeId: string | null;
+    productType: {
+        name: string;
+    } | null;
     product: {
         id: string;
         name: string;
         price: number;
+        productType: {
+            name: string;
+        }[];   
         images: {
             url: string;
         }[];

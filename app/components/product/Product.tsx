@@ -20,10 +20,6 @@ const Product = ({id, name, price, image, types, reviews }: productInterface) =>
 
     const router = useRouter();
     // Currency format based on browser language
-    const currency = new Intl.NumberFormat('fr-FR', {
-        style: 'currency',
-        currency: 'EUR',
-    });
 
     const handleOpenProduct = () => {
         router.push(`/product/${id}`);
@@ -41,14 +37,14 @@ const Product = ({id, name, price, image, types, reviews }: productInterface) =>
                 {/* Name and price */}
                 <div className="flex justify-between">
                     <div className="text-m font-bold">{name}</div>
-                    <div className="text-m font-bold">{currency.format(price)}</div>
+                    <div className="text-m font-bold">{price.toFixed(2)}$</div>
                 </div>
 
                 {/* Types */}
                 { types ? (
-                <div className="w-40 h-5 flex gap-2 overflow-hidden">
+                <div className="w-40 h-5 flex gap-1 overflow-hidden">
                     {types.map((type) => (
-                        <div key={type.id} className="text-lg font-semibold">{type.name}</div>
+                        <div key={type.id} className="text-sm font-semibold">{type.name}</div>
                     ))}
                 </div>
                 ) : (

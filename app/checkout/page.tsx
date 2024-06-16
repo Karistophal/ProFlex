@@ -1,9 +1,13 @@
-
+import BuyButton from "../components/checkout/buyButton";
 
 const CheckoutPage = () => {
   return (
     <div>
-      <h1>Checkout</h1>
+      <div className="text-4xl font-bold text-center my-10">Checkout</div>
+      <div className="flex justify-center">
+        <BuyButton />
+      </div>
+
     </div>
   );
 }

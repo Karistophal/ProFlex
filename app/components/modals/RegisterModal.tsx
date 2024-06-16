@@ -44,10 +44,10 @@ const RegisterModal = () => {
         axios.post('/api/register', data)
             .then(() => {
                 registerModal.onClose();
-                toast.success("Account created successfully");
+                toast.success("Compte créé avec succès.");
             })
             .catch((error) => {
-                toast.error("Something went wrong. Please try again later");
+                toast.error("Erreur lors de la création du compte.");
             })
             .finally(() => {
                 setIsLoading(false);
@@ -62,10 +62,10 @@ const RegisterModal = () => {
 
     const bodyContent = (
         <div className='flex flex-col gap-4'>
-            <Heading title='Register' subtitle='Create an account to continue' />
+            <Heading title='Inscription' subtitle='Créer un compte et commencez vos achats' />
             <Input
                 id='name'
-                label='Name'
+                label='Nom'
                 required
                 register={register}
                 errors={errors}
@@ -80,7 +80,7 @@ const RegisterModal = () => {
             />
             <Input
                 id='password'
-                label='Password'
+                label='Mot de passe'
                 type='password'
                 required
                 register={register}
@@ -93,13 +93,13 @@ const RegisterModal = () => {
         <div className='flex flex-col gap-4 mt-3'>
             <Button
                 outline
-                label='Continue with Google'
+                label='Continuer avec Google'
                 icon={FcGoogle}
                 onClick={() => signIn('google')}
             />
             <Button
                 outline
-                label='Continue with Apple'
+                label='Continuer avec Apple'
                 icon={GrApple}
                 onClick={() => {}}
             />
@@ -135,7 +135,7 @@ const RegisterModal = () => {
             disabled={isLoading}
             isOpen={registerModal.isOpen}
             title="Register"
-            actionLabel="Continue"
+            actionLabel="S'inscrire"
             onClose={registerModal.onClose}
             onSubmit={handleSubmit(onSubmit)}
             body={bodyContent}
