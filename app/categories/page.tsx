@@ -15,7 +15,7 @@ const CategoryAllPage = async () => {
 
 
     return (
-        <div className="flex m-10 mx-20 h-fit "> 
+        <div className="flex m-10 mx-20 h-fit ">
             <div className="flex flex-col gap-2 h-[300px]  w-[300px] p-4 mr-14 border-[1px] border-gray-300 rounded-lg">
                 <div className="flex flex-col justify-center text-center">
                     <div className="text-2xl font-bold">
@@ -31,15 +31,15 @@ const CategoryAllPage = async () => {
                     Découvrez toutes nos catégories
                 </div>
                 <div className="w-full gap-4 pt-8 flex flex-wrap">
-                    {categories.map((category) => (
-                        <div className="h-[350px]" key={category.id}>
-                            <Category
-                            id={category.id}
-                            name={category.name}
-                            img={category.image}
-                        />
-                        </div>
-                    ))}
+                    { categories.length > 0 && categories.map((category) => (
+                            <div className="h-[350px]" key={category.id}>
+                                <Category
+                                    id={category.id}
+                                    name={category.name}
+                                    img={category.image}
+                                />
+                            </div>
+                        ))}
                 </div>
             </div>
         </div>
