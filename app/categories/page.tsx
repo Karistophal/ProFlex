@@ -32,9 +32,8 @@ const CategoryAllPage = async () => {
                 </div>
                 <div className="w-full gap-4 pt-8 flex flex-wrap">
                     {categories.map((category) => (
-                        <div className="h-[350px]">
+                        <div className="h-[350px]" key={category.id}>
                             <Category
-                            key={category.id}
                             id={category.id}
                             name={category.name}
                             img={category.image}
