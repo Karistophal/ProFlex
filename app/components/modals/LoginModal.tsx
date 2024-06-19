@@ -95,12 +95,7 @@ const LoginModal = () => {
                 icon={FcGoogle}
                 onClick={() => signIn('google')}
             />
-            <Button
-                outline
-                label='Continuer avec Apple'
-                icon={GrApple}
-                onClick={() => signIn('apple')}
-            />
+
             <div className='
                 text-neutral-500
                 text-center

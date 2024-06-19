@@ -97,12 +97,6 @@ const RegisterModal = () => {
                 icon={FcGoogle}
                 onClick={() => signIn('google')}
             />
-            <Button
-                outline
-                label='Continuer avec Apple'
-                icon={GrApple}
-                onClick={() => {}}
-            />
             <div className='
                 text-neutral-500
                 text-center
