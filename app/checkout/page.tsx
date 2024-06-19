@@ -66,7 +66,7 @@ const CheckoutPage = async () => {
             <div className="font-bold text-xl">Total :</div>
             <div className="font-bold text-xl">{totalPrice.toFixed(2)}€</div>
           </div>
-          <BuyButton listItems={cartItems} />
+          <BuyButton />
         </div>
       </div>
     </div>

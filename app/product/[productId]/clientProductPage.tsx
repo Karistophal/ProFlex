@@ -12,6 +12,7 @@ import TypeInput from "@/app/components/inputs/TypeInput";
 import Hr from "@/app/components/Hr";
 
 import { Plus, Minus, ShoppingCart } from "lucide-react";
+import Image from "next/image";
 
 interface Product {
   id: string;
@@ -83,7 +84,7 @@ const ClientProductPage: React.FC<clientProductPageProps> = ({
       <div className="flex h-full w-full items-center lg:flex-row flex-col ">
         <div className="lg:hidden mb-5 text-4xl sm:text-5xl font-bold text-start w-full">{product.name}</div>
         <div className="flex mb-10 flex-col gap-8 lg:w-3/5 w-full md:min-w-[450px] lg:mr-14">
-          <img src={currentImage} alt="" className="w-full sm:h-[500px] h-[300px] object-cover rounded-3xl" />
+          <Image src={currentImage} alt="" className="w-full sm:h-[500px] h-[300px] object-cover rounded-3xl" />
           <div className="w-full flex gap-2 overflow-x-auto">
             {product.images.map((img, index) => (
               <img

@@ -6,6 +6,7 @@ import Product from "./components/product/Product";
 
 import getAllCategory from "./actions/getAllCategory";
 import getTrending from "./actions/getTrending"
+import Image from "next/image";
 
 export default async function Home() {
   const categories = await getAllCategory() ?? [];
@@ -15,7 +16,7 @@ export default async function Home() {
     <div className="flex flex-col items-center min-h-screen px-20 py-12 gap-12 ">
       {/* Head */}
       <div className="relative w-full h-96 bg-neutral-300 rounded-lg">
-        <img src="https://www.trace-ta-route.com/wp-content/uploads/2020/08/Randonnee-Bauges-Arcalod-24-ascension-Trace-Les-Cimes-1050x700.jpg" alt="head" className="w-full h-full object-cover rounded-lg" />
+        <Image src="https://www.trace-ta-route.com/wp-content/uploads/2020/08/Randonnee-Bauges-Arcalod-24-ascension-Trace-Les-Cimes-1050x700.jpg" alt="head" className="w-full h-full object-cover rounded-lg" />
         <div className="absolute w-full flex flex-col justify-center top-1/2 transform -translate-y-1/2 text-5xl font-bold text-white text-center">
           <div>Boostez Votre Performance</div>
           <div>Libérez Votre Potentiel</div>

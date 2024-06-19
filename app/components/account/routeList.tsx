@@ -9,6 +9,7 @@ import { User, Shield, LogOut } from 'lucide-react'
 import React from 'react'
 import Hr from "../Hr"
 import { SafeUser } from "@/app/types"
+import Image from "next/image";
 
 interface RouteListProps {
   focus: string
@@ -23,7 +24,7 @@ const RouteList: React.FC<RouteListProps> = ({ focus, user }) => {
           Mon compte
         </div>
         <div className="my-2">
-          <img src={user?.image ? user.image : "/images/default-profile.png"} className="w-24 h-24 rounded-full mx-auto" />
+          <Image src={user?.image ? user.image : "/images/default-profile.png"} className="w-24 h-24 rounded-full mx-auto" alt="profile" />
         </div>
         <div className="text-lg font-bold">
           {user?.name}

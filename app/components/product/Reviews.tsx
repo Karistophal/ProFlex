@@ -113,7 +113,7 @@ const Reviews: React.FC<ReviewsProps> = ({
                         </div>
                     ))
                 ) : (
-                    <div className="text-center text-gray-500 text-lg sm:text-xl font-bold">Il n'y a aucun avis</div>
+                    <div className="text-center text-gray-500 text-lg sm:text-xl font-bold">Il n&apos;y a aucun avis</div>
                 )}
                 {reviews.length !== 0 && (
                     <div className=" text-md sm:text-lg flex justify-center cursor-pointer text-gray-500 font-semibold text-lg"

@@ -7,6 +7,7 @@ import { deleteCartItem } from '@/app/actions/getCartItems';
 
 import { Trash2 } from 'lucide-react';
 import axios from "axios";
+import Image from "next/image";
 
 interface cartItemProps {
     id: string;
@@ -23,7 +24,7 @@ export default function CartItemProps({ id, name, selectedTypeName, price, quant
     return (
         <div className="w-full">
             <div className="w-full flex">
-                <img src={image} alt={name} className="w-48 h-36 object-cover mr-6 rounded-lg" />
+                <Image src={image} alt={name} className="w-48 h-36 object-cover mr-6 rounded-lg" />
                 <div className="flex flex-col w-full my-7 mr-10 flex-1">
                     <div className="flex justify-between w-full flex-1">
                         <h3 className="cursor-pointer font-semibold text-xl" onClick={() => router.push(`/product/${id}`)}>{name}</h3>

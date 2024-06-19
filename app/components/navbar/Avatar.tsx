@@ -1,4 +1,5 @@
 import { UserRound } from 'lucide-react';
+import Image from 'next/image';
 
 
 
@@ -10,7 +11,7 @@ const Avatar: React.FC<AvatarProps> = ({ image }) => {
     return (
         <>
             {image? (
-                <img
+                <Image
                     src={image}
                     alt=""
                     className="

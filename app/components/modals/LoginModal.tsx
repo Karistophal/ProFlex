@@ -107,7 +107,7 @@ const LoginModal = () => {
                 justify-center
             '>
                 <div >
-                    Vous n'avez pas de compte ?
+                    Vous n&apos;avez pas de compte ?
                 </div>
                 <button
                     onClick={toggle}
@@ -117,7 +117,7 @@ const LoginModal = () => {
                         focus:outline-none
                     '
                 >
-                    S'inscrire
+                    S&apos;inscrire
                 </button>
             </div>
         </div>
