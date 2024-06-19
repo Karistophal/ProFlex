@@ -18,7 +18,7 @@ const Category: React.FC<CategoryProps> = ({ name, img }) => {
             onClick={() => router.push(`/categories/${name}`)}
         >
             <img src={img} alt="" className="w-full h-full object-cover" />
-            <div className="absolute bottom-1/2 transform translate-y-1/2 text-white font-bold text-2xl">{name}</div>
+            <div className="absolute bottom-1/2 transform translate-y-1/2 text-white font-bold text-2xl ">{name}</div>
         </div>
     );
 };

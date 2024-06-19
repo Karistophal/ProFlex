@@ -1,6 +1,7 @@
 'use server';
 
 import prisma from "../libs/prismadb";
+import getCurrentUser from "./getCurrentUser";
 
 export default async function getCartItems(userId: string) {
     try {
@@ -11,6 +12,7 @@ export default async function getCartItems(userId: string) {
             include: {
                 productType: {
                     select: {
+                        id: true,
                         name: true
                     }
                 },
@@ -19,6 +21,7 @@ export default async function getCartItems(userId: string) {
                         id: true,
                         name: true,
                         price: true,
+                        stripePriceId: true,
                         productType: {
                             select: {
                                 name: true
@@ -42,11 +45,18 @@ export default async function getCartItems(userId: string) {
 }
 
 
-export async function deleteCartItem(userId: string, productId: string) {
+export async function deleteCartItem(productId: string) {
+    
+    
+    const currentUser = await getCurrentUser();
+    if (!currentUser) {
+        return false;
+    }
+
     try {
         const deletedCount = await prisma.cartItem.deleteMany({
             where: {
-                id: productId
+                id: productId,
             }
         });
 

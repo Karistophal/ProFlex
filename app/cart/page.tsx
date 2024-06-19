@@ -5,14 +5,17 @@ import getCartItems, { deleteCartItem } from "../actions/getCartItems";
 import { CartItem } from "../types";
 
 import Hr from "@/app/components/Hr";
-import PayButton from "../components/cart/payButton";
+import BuyButton from "@/app/components/checkout/buyButton";
 import CartItemProps from "../components/cart/cartItem";
 
 
 const CartPage = async () => {
-    let totalPrice = 0;
+
     const currentUser = await getCurrentUser();
     let cartItems: CartItem[] = [];
+    let sousTotalPrice = 0
+    let taxesPrice = 0
+    let totalPrice = 0
 
     if (currentUser) {
         const cartItemsRequest = await getCartItems(currentUser.id);
@@ -22,24 +25,37 @@ const CartPage = async () => {
     }
 
     function totalPriceFunction() {
-        totalPrice = cartItems.reduce((acc, item) => {
+        // Calcul sous-total
+        sousTotalPrice = cartItems.reduce((acc, item) => {
             const { product, quantity } = item;
             const { price } = product;
             return acc + price * quantity;
         }, 0);
+        // calcul Taxes
+        taxesPrice = sousTotalPrice * 0.1
+
+        totalPrice = sousTotalPrice + taxesPrice
+    }
+
+    async function handleCartDelete() {
+        if (currentUser) {
+            const cartItemsRequest = await getCartItems(currentUser.id);
+            cartItems = cartItemsRequest ? cartItemsRequest : [];
+            totalPriceFunction()
+        }
     }
 
     return (
-        <div className="w-full h-full flex gap-4 px-32 pt-10">
+        <div className="w-full flex gap-4 px-32 py-10">
             {
                 currentUser ? (
                     <>
                         <div className="flex flex-col items-start w-full">
-                            <div className="text-4xl w-full font-bold mb-6 pl-4">Mon Panier</div>
+                            <div className="text-4xl w-full font-bold mb-16">Mon Panier</div>
                             <div className="flex w-full gap-5">
-                                <div className="flex flex-col min-w-[600px] w-full gap-4 p-6 bg-gray-200 h-min-20 rounded-xl">
+                                <div className="flex flex-col min-w-[600px] w-full gap-4 mr-12 h-min-20 rounded-xl">
                                     <div className="text-2xl font-bold">
-                                        Produits dans votre panier :
+                                        {cartItems.length} produits
                                     </div>
                                     <Hr />
                                     {cartItems.length > 0 ? (cartItems.map((item, index) => {
@@ -49,6 +65,7 @@ const CartPage = async () => {
                                             <>
                                                 <CartItemProps
                                                     key={index}
+                                                    id={product.id}
                                                     name={name}
                                                     price={price}
                                                     quantity={quantity}
@@ -67,37 +84,42 @@ const CartPage = async () => {
                                     }
                                 </div>
                                 {/* Panier */}
-                                <div className="flex flex-col h-fit min-w-[350px] p-6 bg-gray-200 rounded-xl  ">
-                                    <div className="text-2xl font-bold mb-4">Récapitulatif :</div>
-                                    <Hr />
-                                    <div className="pb-3 pt-4">
-                                        {cartItems.length > 0 ? (
+                                <div className="flex flex-col h-fit min-w-[350px] p-6 border-gray-300 border-[1px]  rounded-xl  ">
+                                    <div className="text-2xl font-extrabold">Récapitulatif</div>
+                                    <div className="pb-3 pt-6">
+                                        {cartItems.length > 0 && (
                                             cartItems.map((item, index) => {
                                                 const { product, quantity } = item;
                                                 const { name, price } = product;
                                                 return (
                                                     <div key={index} className="flex justify-between gap-5 pb-2">
                                                         <div className="flex gap-1">
-                                                            <div className="max-w-32">{name}</div>
-                                                            <div className="">x {quantity}</div>
+                                                            <div className="text-lg max-w-32">{name}</div>
+                                                            <div className="text-lg">x {quantity}</div>
                                                         </div>
-                                                        <div className="">{price.toFixed(2)}$ </div>
+                                                        <div className="text-lg font-bold">{(price*quantity).toFixed(2)}€</div>
                                                     </div>
                                                 );
                                             })
-                                        ) : (
-                                            <div className="flex justify-center items-center w-full h-full">
-                                                <div className="text-2xl">Votre panier est vide</div>
-                                            </div>
                                         )
                                         }
+                                        <div className="pb-3 pt-6 ">
+                                            <div className="flex justify-between mb-2">
+                                                <div className="text-lg text-gray-500">Sous-total</div>
+                                                <div className="text-lg font-bold">{sousTotalPrice.toFixed(2)}€</div>
+                                            </div>
+                                            <div className="flex justify-between mb-2">
+                                                <div className="text-lg text-gray-500">Taxes</div>
+                                                <div className="text-lg font-bold">{taxesPrice.toFixed(2)}€</div>
+                                            </div>
+                                        </div>
                                     </div>
                                     <Hr />
                                     <div className="flex justify-between py-4">
                                         <div className="font-bold text-xl">Total :</div>
-                                        <div className="font-bold text-xl">{totalPrice.toFixed(2)}$</div>
+                                        <div className="font-bold text-xl">{totalPrice.toFixed(2)}€</div>
                                     </div>
-                                    <PayButton />
+                                    <BuyButton />
                                 </div>
                             </div>
                         </div>

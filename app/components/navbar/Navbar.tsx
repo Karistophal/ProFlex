@@ -51,17 +51,11 @@ const Navbar: React.FC<NavbarProps> = ({
             </div>
 
             <div className="flex items-center gap-3">
-                <div className=" block md:absolute md:flex md:left-1/2 md:top-1/2 md:transform md:-translate-x-1/2 md:-translate-y-1/2">
-                    <SearchBar />
-                </div>
                 <div onClick={toggleUser} className="relative flex items-center justify-center text-gray-600 md: w-10 h-10 rounded-full cursor-pointer">
                     <Avatar image={currentUser?.image} />
                     {isUserOpen && (
                         <UserMenu currentUser={currentUser} closeUserMenu={toggleUser} />
                     )}
-                </div>
-                <div className="relative flex items-center justify-center text-gray-600 w-10 h-10 rounded-full cursor-pointer">
-                    <Heart strokeWidth={2.5} />
                 </div>
                 <div onClick={toggleCart} className="relative flex items-center justify-center text-gray-600 w-10 h-10 rounded-full cursor-pointer">
                     <ShoppingCart strokeWidth={2.5} />

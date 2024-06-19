@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Button from "../Button";
+import BuyButton from "../checkout/buyButton";
 import { useRouter } from "next/navigation";
 import getCartItems, { deleteCartItem } from "@/app/actions/getCartItems";
 import { SafeUser } from "@/app/types";
@@ -40,21 +41,14 @@ const CartMenu: React.FC<CartMenuProps> = ({ currentUser, closeCart, handleConne
     }, 0);
 
     const handleDelete = (productId: string) => {
-        currentUser ? deleteCartItem(currentUser.id, productId) : null;
+        currentUser ? deleteCartItem( productId) : null;
         setCartItems(cartItems.filter((item) => item.id !== productId));
     }
-
-    const handlePay = () => {
-        closeCart();
-        router.push("/checkout");
-    };
 
     const handleViewCart = () => {
         closeCart();
         router.push("/cart");
     };
-
-
 
     return (
         <div onMouseLeave={() => closeCart()} className="absolute top-12 right-0 w-80 bg-white rounded-lg flex flex-col gap-2 p-4 z-50 shadow-lg shadow-gray-600">
@@ -76,14 +70,14 @@ const CartMenu: React.FC<CartMenuProps> = ({ currentUser, closeCart, handleConne
                             cartItems.length > 0 && (
                                 <div className="flex justify-between p-2">
                                     <div>Total</div>
-                                    <div>{totalPrice.toFixed(2)}$</div>
+                                    <div>{totalPrice.toFixed(2)}€</div>
                                 </div>
                             )
                         }
                     </div>
                     <div className="flex gap-4">
-                        <Button label="Voir le panier" onClick={handleViewCart} outline small />
-                        <Button label="Payer" onClick={handlePay} small />
+                        <Button label="Valider le panier" onClick={handleViewCart} small />
+                        
                     </div>
                 </>
             ) : (

@@ -17,12 +17,14 @@ export type CartItem = {
     productId: string;
     productTypeId: string | null;
     productType: {
+        id: string;
         name: string;
     } | null;
     product: {
         id: string;
         name: string;
         price: number;
+        stripePriceId: string;
         productType: {
             name: string;
         }[];   

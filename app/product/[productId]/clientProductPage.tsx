@@ -108,7 +108,7 @@ const ClientProductPage: React.FC<clientProductPageProps> = ({
 
           <div className="flex flex-col gap-4">
             <ReviewStars reviews={product.reviews} size={20} reviewCounter />
-            <p className="text-3xl font-bold">{product.price.toFixed(2)}$</p>
+            <p className="text-3xl font-bold">{product.price.toFixed(2)}€</p>
           </div>
 
           <div className="flex gap-4 text-gray-500">

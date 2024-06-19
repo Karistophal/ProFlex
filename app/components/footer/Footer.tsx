@@ -8,8 +8,8 @@ const Footer = () => {
 
     return (
         <footer className="bg-gray-800 text-white w-full">
-            <div className="container mx-auto py-8">
-
+            <div className="text-center py-8">
+                Site marketplace - Codé et designé par <a href="https://charles-folio.vercel.app/" className="text-blue-500">Charles Delfau</a>
             </div>
         </footer>
     );

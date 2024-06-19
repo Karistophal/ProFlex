@@ -1,21 +1,14 @@
 
 import React from "react";
 
-import getCategoryProducts from "../../actions/getCategoryProducts";
-
+import getTrending from "../actions/getTrending";
 import Product from "@/app/components/product/Product";
 
-interface IParams {
-    categoriesId?: string;
-}
+const TrendingPage = async () => {
 
-const CategoryPage = async ({ params }: { params: IParams }) => {
-
-    if (!params.categoriesId) return null;    
-
-    const products = await getCategoryProducts(params.categoriesId);
-    if (!products) return null;
-
+    const trends = await getTrending();
+    if (!trends) return null;
+    
 
 
     return (
@@ -32,18 +25,18 @@ const CategoryPage = async ({ params }: { params: IParams }) => {
             </div>
             <div className="flex flex-col w-full">
                 <div className="w-full text-4xl font-bold">
-                    Découvrez nos produits de {decodeURIComponent(params.categoriesId)}
+                    Découvrez nos produits tendances
                 </div>
                 <div className="w-full flex flex-wrap gap-4 pt-8">
-                    {products.map((product) => (
+                    {trends.map((product) => (
                         <Product
                             key={product.id}
                             id={product.id}
-                            name={product.name}
-                            price={product.price}
-                            image={product.images}
-                            types={product.productType}
-                            reviews={product.reviews}
+                            name={product.product.name}
+                            price={product.product.price}
+                            image={product.product.images}
+                            types={product.product.productType}
+                            reviews={product.product.reviews}
                         />
                     ))}
                 </div>
@@ -52,4 +45,4 @@ const CategoryPage = async ({ params }: { params: IParams }) => {
     );
 }
 
-export default CategoryPage;
+export default TrendingPage;

@@ -32,7 +32,7 @@ const CartItemSmall: React.FC<CartItemProps> = ({
                     <div className="text-sm text-neutral-500">{productType?.name}</div>
                 </div>
                 <div className="flex">
-                    <div className="text-neutral-500 mr-2">{price}$</div>
+                    <div className="text-neutral-500 mr-2">{price}€</div>
                     <div className="text-neutral-500">x {quantity}</div>
                 </div>
             </div>

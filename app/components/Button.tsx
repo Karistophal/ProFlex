@@ -4,7 +4,8 @@ import { LucideProps } from 'lucide-react';
 import React from 'react';
 
 interface ButtonProps {
-    onClick: () => void;
+    onClick?: () => void;
+    formAction?: () => void;
     label: string;
     disabled?: boolean;
     outline?: boolean;
@@ -14,6 +15,7 @@ interface ButtonProps {
 
 const Button: React.FC<ButtonProps> = ({
     onClick,
+    formAction,
     label,
     disabled,
     outline,
@@ -22,7 +24,8 @@ const Button: React.FC<ButtonProps> = ({
 }) => {
     return (
         <button
-            onClick={onClick}
+            {...(onClick ? { onClick } : {})}
+            {...(formAction ? { formAction } : {})}
             disabled={disabled}
             className={`
                 relative

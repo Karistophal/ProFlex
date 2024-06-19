@@ -26,7 +26,7 @@ const Product = ({id, name, price, image, types, reviews }: productInterface) =>
     }
 
     return (
-        <div className="w-60 h-80 flex flex-col items-center gap-2 cursor-pointer" onClick={handleOpenProduct} >
+        <div className="w-60 h-fit flex flex-col items-center gap-2 cursor-pointer" onClick={handleOpenProduct} >
             { image && image[0] ? (
                 <img className="w-full h-48 rounded-lg object-cover" src={image[0].url} alt={name} />
             ) : (
@@ -37,14 +37,15 @@ const Product = ({id, name, price, image, types, reviews }: productInterface) =>
                 {/* Name and price */}
                 <div className="flex justify-between">
                     <div className="text-m font-bold">{name}</div>
-                    <div className="text-m font-bold">{price.toFixed(2)}$</div>
+                    <div className="text-m font-bold">{price.toFixed(2)}€</div>
                 </div>
 
                 {/* Types */}
                 { types ? (
-                <div className="w-40 h-5 flex gap-1 overflow-hidden">
+                <div className="w-40 h-6 ml-2 flex gap-1 overflow-hidden text-gray-500">
                     {types.map((type) => (
-                        <div key={type.id} className="text-sm font-semibold">{type.name}</div>
+                        <div key={type.id} className="text-sm font-semibold">{type.name}{types.indexOf(type) < types.length - 1 ? ', ' : ''}</div>
+                        
                     ))}
                 </div>
                 ) : (

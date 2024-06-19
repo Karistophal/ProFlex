@@ -17,17 +17,12 @@ export async function POST(
         return NextResponse.json({ message: "You need to be logged in to add to cart" }, { status: 401 });
     }
 
-
-
     const { productId } = params;
     const { quantity, selectedType } = await req.json();   
-    
-
 
     if (!productId) {
         return NextResponse.json({ message: "Product ID is required" }, { status: 400 });
     }
-
 
     // Check if product exists
     const product = await prisma.product.findUnique({
@@ -69,6 +64,4 @@ export async function POST(
         },
     });
     return NextResponse.json({ message: "Cart updated" });
-
-
 }

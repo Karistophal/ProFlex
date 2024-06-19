@@ -10,6 +10,7 @@ export default async function getTrendingProducts() {
                         include: {
                             reviews: true,
                             images: true,
+                            productType: true
                         }
                     }
 

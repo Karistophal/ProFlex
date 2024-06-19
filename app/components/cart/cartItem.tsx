@@ -1,43 +1,46 @@
 "use client"
 
-import React from 'react'
+import React, { useState } from "react";
+import { useRouter } from 'next/navigation'
+
+import { deleteCartItem } from '@/app/actions/getCartItems';
 
 import { Trash2 } from 'lucide-react';
+import axios from "axios";
 
 interface cartItemProps {
+    id: string;
     name: string;
+    selectedTypeName?: string;
     price: number;
     quantity: number;
     image: string;
 }
 
-export default function CartItemProps({ name, price, quantity, image }: cartItemProps) {
+export default function CartItemProps({ id, name, selectedTypeName, price, quantity, image}: cartItemProps) {
+    const router = useRouter();
 
     return (
         <div className="w-full">
             <div className="w-full flex">
-                <img src={image} alt={name} className="w-52 h-40 object-cover mr-6 rounded-lg" />
-                <div className="flex flex-col w-full my-3 flex-1">
+                <img src={image} alt={name} className="w-48 h-36 object-cover mr-6 rounded-lg" />
+                <div className="flex flex-col w-full my-7 mr-10 flex-1">
                     <div className="flex justify-between w-full flex-1">
-                        <h3 className="font-semibold text-xl">{name}</h3>
-                        <p className="font-bold text-xl">{price}$</p>
+                        <h3 className="cursor-pointer font-semibold text-xl" onClick={() => router.push(`/product/${id}`)}>{name}</h3>
+                        <p className="font-bold text-xl">{price * quantity}€</p>
                     </div>
-                    <div className="flex items-center">
-                        <div className="mr-5">Quantité :</div>
-                        <select name="quantity" id="quantity" className="mr-5 bg-gray-50 rounded-full font-semibold p-2 px-5 select w-fit">
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                            <option value="6">6</option>
-                            <option value="7">7</option>
-                            <option value="8">8</option>
-                            <option value="9">9</option>
-                        </select>
-                        <div className="cursor-pointer text-red-500 hover:text-red-700 transition duration-200 ease-in-out" >
-                            <Trash2 size={24} />
+                    <div className="flex justify-between items-center">
+                        <div className='flex items-center'>
+                            <div className="mr-5">Quantité :</div>
+                            <select name="quantity" id="quantity" className="mr-5 bg-gray-50 rounded-full font-semibold p-2 px-5 select w-fit" value={quantity} disabled>
+                                {
+                                    Array.from({ length: 10 }, (_, i) => i + 1).map((item, index) => (
+                                        <option key={item} selected={index === quantity} value={item}>{item}</option>
+                                    ))
+                                }
+                            </select>
                         </div>
+
                     </div>
                 </div>
             </div>
