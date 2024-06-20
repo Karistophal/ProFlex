@@ -8,10 +8,9 @@ import { redirect } from "next/navigation"
 import { CartItem } from "@/app/types"
 import getCartItems from "@/app/actions/getCartItems"
 
-import toast from 'react-hot-toast';
-
 
 export const BuyButton = () => {
+    const taxes = 0.1;
     return (
         <form>
             <Button label="Payer" formAction={async () => {
@@ -42,6 +41,8 @@ export const BuyButton = () => {
                     price: item.product.stripePriceId,
                     quantity: item.quantity,
                 }));
+
+
 
                 const stripeCustomerId = user?.stripeCustomerId ?? undefined;
 

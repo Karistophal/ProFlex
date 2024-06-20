@@ -24,7 +24,7 @@ export default function CartItemProps({ id, name, selectedTypeName, price, quant
     return (
         <div className="w-full">
             <div className="w-full flex">
-                <Image src={image} alt={name} className="w-48 h-36 object-cover mr-6 rounded-lg" />
+                <Image src={image} alt={name} width={192} height={144} className="w-48 h-36 object-cover mr-6 rounded-lg" />
                 <div className="flex flex-col w-full my-7 mr-10 flex-1">
                     <div className="flex justify-between w-full flex-1">
                         <h3 className="cursor-pointer font-semibold text-xl" onClick={() => router.push(`/product/${id}`)}>{name}</h3>

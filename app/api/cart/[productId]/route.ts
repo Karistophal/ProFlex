@@ -20,6 +20,14 @@ export async function POST(
     const { productId } = params;
     const { quantity, selectedType } = await req.json();   
 
+    const cartItemCount = prisma.cartItem.count({
+        where: {
+            userId: user?.id
+        }
+    });
+
+
+
     if (!productId) {
         return NextResponse.json({ message: "Product ID is required" }, { status: 400 });
     }
@@ -52,7 +60,7 @@ export async function POST(
                 quantity: cartItem.quantity + (quantity || 1)
             }
         });
-        return NextResponse.json({ message: "Cart updated" });
+        return NextResponse.json({ message: "Cart updated" }, { status: 200 });
     }
     // si cartItem n'existe pas, créer un nouveau
     await prisma.cartItem.create({

@@ -80,11 +80,11 @@ const ClientProductPage: React.FC<clientProductPageProps> = ({
   }
 
   return (
-    <div className="flex flex-col gap-24 w-full justify-center py-20 xl:px-20 px-0">
+    <div className="flex flex-col gap-24 w-full justify-center py-20 xl:px-20 md:px-20 px-0">
       <div className="flex h-full w-full items-center lg:flex-row flex-col ">
         <div className="lg:hidden mb-5 text-4xl sm:text-5xl font-bold text-start w-full">{product.name}</div>
         <div className="flex mb-10 flex-col gap-8 lg:w-3/5 w-full md:min-w-[450px] lg:mr-14">
-          <Image src={currentImage} alt="" className="w-full sm:h-[500px] h-[300px] object-cover rounded-3xl" />
+          <Image src={currentImage} alt="" className="w-full sm:h-[500px] h-[300px] object-cover rounded-3xl" width={500} height={500} />
           <div className="w-full flex gap-2 overflow-x-auto">
             {product.images.map((img, index) => (
               <img

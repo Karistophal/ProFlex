@@ -6,6 +6,8 @@ import Footer from "./components/footer/Footer";
 import RegisterModal from "./components/modals/RegisterModal";
 import LoginModal from "./components/modals/LoginModal";
 
+import { ContextProvider } from "@/app/context";
+
 import ToasterProvider from "./providers/ToasterProvider";
 
 import getCurrentUser from "./actions/getCurrentUser";
@@ -25,18 +27,20 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  
+
   const currentUser = await getCurrentUser();
 
   return (
     <html lang="en">
       <body className={font.className}>
-        <ToasterProvider />
-        <RegisterModal />
-        <LoginModal />
-        <Navbar currentUser={currentUser}/>
-        {children}
-        <Footer />
+        <ContextProvider>
+          <ToasterProvider />
+          <RegisterModal />
+          <LoginModal />
+          <Navbar currentUser={currentUser} />
+          {children}
+          <Footer />
+        </ContextProvider>
       </body>
     </html>
   );

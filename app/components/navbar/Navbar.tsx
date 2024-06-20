@@ -11,6 +11,8 @@ import useLoginModal from "../../hook/useLoginModal";
 import { useRouter } from "next/navigation";
 import { SafeUser } from "@/app/types";
 
+import { useAppContext } from "@/app/context";
+
 
 interface NavbarProps {
     currentUser?: SafeUser | null;
@@ -23,6 +25,7 @@ const Navbar: React.FC<NavbarProps> = ({
     const [isCartOpen, setIsCartOpen] = useState(false);
     const router = useRouter();
     const loginModal = useLoginModal();
+    const { cartQuantity } = useAppContext();
 
     const closeAll = () => {
         setIsUserOpen(false);
@@ -59,6 +62,9 @@ const Navbar: React.FC<NavbarProps> = ({
                 </div>
                 <div onClick={toggleCart} className="relative flex items-center justify-center text-gray-600 w-10 h-10 rounded-full cursor-pointer">
                     <ShoppingCart strokeWidth={2.5} />
+                    {cartQuantity > 0 && (
+                        <div className="absolute top-0 right-0 w-4 h-4 bg-red-500 text-white text-xs font-bold rounded-full flex items-center justify-center">{cartQuantity}</div>
+                    )}
                 </div>
                 <div className="hidden sm:block">
                     {isCartOpen && (

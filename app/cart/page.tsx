@@ -10,7 +10,6 @@ import CartItemProps from "../components/cart/cartItem";
 
 
 const CartPage = async () => {
-
     const currentUser = await getCurrentUser();
     let cartItems: CartItem[] = [];
     let sousTotalPrice = 0
@@ -46,7 +45,7 @@ const CartPage = async () => {
     }
 
     return (
-        <div className="w-full flex gap-4 px-32 py-10">
+        <div className="w-full flex gap-4 px-32 py-10 min-h-[calc(100vh-64px)]">
             {
                 currentUser ? (
                     <>

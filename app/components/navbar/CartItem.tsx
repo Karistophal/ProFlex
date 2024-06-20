@@ -26,7 +26,7 @@ const CartItemSmall: React.FC<CartItemProps> = ({
 
     return (
         <div className="relative flex items-center gap-4 p-2 px-4 bg-gray-100 rounded-lg">
-            <Image src={img} alt={name} className="w-28 h-20 object-cover rounded-lg" />
+            <Image src={img} alt={name} width={112} height={80} className="w-28 h-20 object-cover rounded-lg" />
             <div className="flex flex-col justify-between flex-1">
                 <div className="flex flex-col h-full mb-2">
                     <div className="font-semibold">{name}</div>
