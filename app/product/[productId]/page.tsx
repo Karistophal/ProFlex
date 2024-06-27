@@ -4,6 +4,7 @@ import getProduct from "../../actions/getProduct";
 import ClientProductPage from "./clientProductPage";
 
 import getCurrentUser from "@/app/actions/getCurrentUser";
+import { Toast } from "react-hot-toast";
 
 interface IParams {
   productId?: string;

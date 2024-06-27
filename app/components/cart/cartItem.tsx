@@ -9,16 +9,20 @@ import { Trash2 } from 'lucide-react';
 import axios from "axios";
 import Image from "next/image";
 
+import { ProductType } from "@prisma/client";
+
 interface cartItemProps {
     id: string;
     name: string;
     selectedTypeName?: string;
+    productType?: ProductType;
     price: number;
     quantity: number;
     image: string;
+    productId: string;
 }
 
-export default function CartItemProps({ id, name, selectedTypeName, price, quantity, image}: cartItemProps) {
+export default function CartItemProps({ id, productId, name, selectedTypeName, price, quantity, productType, image }: cartItemProps) {
     const router = useRouter();
 
     return (
@@ -27,7 +31,10 @@ export default function CartItemProps({ id, name, selectedTypeName, price, quant
                 <Image src={image} alt={name} width={192} height={144} className="w-48 h-36 object-cover mr-6 rounded-lg" />
                 <div className="flex flex-col w-full my-7 mr-10 flex-1">
                     <div className="flex justify-between w-full flex-1">
-                        <h3 className="cursor-pointer font-semibold text-xl" onClick={() => router.push(`/product/${id}`)}>{name}</h3>
+                        <div className="">
+                            <h3 className="cursor-pointer font-semibold text-xl" onClick={() => router.push(`/product/${productId}`)}>{name}</h3>
+                            <p className="text-gray-500">{productType?.name}</p>
+                        </div>
                         <p className="font-bold text-xl">{price * quantity}€</p>
                     </div>
                     <div className="flex justify-between items-center">
@@ -41,7 +48,11 @@ export default function CartItemProps({ id, name, selectedTypeName, price, quant
                                 }
                             </select>
                         </div>
-
+                        <form>
+                            <button formAction={() => deleteCartItem(id)} className="text-red-500">
+                                <Trash2 size={24} />
+                            </button>
+                        </form>
                     </div>
                 </div>
             </div>

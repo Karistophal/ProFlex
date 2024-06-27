@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import Button from "../Button";
-import BuyButton from "../checkout/buyButton";
+
 import { useRouter } from "next/navigation";
 import getCartItems, { deleteCartItem } from "@/app/actions/getCartItems";
 import { SafeUser } from "@/app/types";
 import CartItemSmall from "./CartItem";
 import { CartItem } from "@/app/types";
+
+import { useAppContext } from "@/app/context";
 
 interface CartMenuProps {
     currentUser?: SafeUser | null;
@@ -18,6 +20,8 @@ interface CartMenuProps {
 const CartMenu: React.FC<CartMenuProps> = ({ currentUser, closeCart, handleConnect }) => {
     const router = useRouter();
     const [cartItems, setCartItems] = useState([] as CartItem[]);
+
+    const { cartQuantity, setCartQuantity } = useAppContext();
 
     useEffect(() => {
         const fetchCartItems = async () => {
@@ -40,15 +44,14 @@ const CartMenu: React.FC<CartMenuProps> = ({ currentUser, closeCart, handleConne
         return acc + price * quantity;
     }, 0);
 
-    const handleDelete = (productId: string) => {
-        currentUser ? deleteCartItem( productId) : null;
-        setCartItems(cartItems.filter((item) => item.id !== productId));
+    async function handleDelete(productId: string) {
+        currentUser && deleteCartItem(productId).then((response) => { console.log(response) });
     }
 
     const handleViewCart = () => {
         closeCart();
         router.push("/cart");
-    };
+    };  
 
     return (
         <div onMouseLeave={() => closeCart()} className="absolute top-12 right-0 w-80 bg-white rounded-lg flex flex-col gap-2 p-4 z-50 shadow-lg shadow-gray-600">
@@ -76,13 +79,13 @@ const CartMenu: React.FC<CartMenuProps> = ({ currentUser, closeCart, handleConne
                         }
                     </div>
                     <div className="flex gap-4">
-                        <Button label="Valider le panier" onClick={handleViewCart} small />
+                        <Button label="Voir le panier" onClick={handleViewCart} small />
                         
                     </div>
                 </>
             ) : (
                 <div className="flex flex-col gap-4">
-                    <div className="text-center">Connectez-vous pour voir votre panier</div>
+                    <div className="text-center my-8 px-5">Connectez-vous pour voir votre panier</div>
                     <Button label="Se connecter" onClick={handleConnect} small />
                 </div>
             )}

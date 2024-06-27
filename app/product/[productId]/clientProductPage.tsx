@@ -5,6 +5,8 @@ import React, { useState } from "react";
 import useLoginModal from "@/app/hook/useLoginModal";
 import axios from "axios";
 import { Review } from "@prisma/client";
+import { useAppContext } from "@/app/context";
+import toast from 'react-hot-toast';
 
 import Reviews from "@/app/components/product/Reviews";
 import ReviewStars from "@/app/components/inputs/ReviewStars";
@@ -49,6 +51,8 @@ const ClientProductPage: React.FC<clientProductPageProps> = ({
   const [reviews, setReviews] = useState<ReviewWithUser[]>(product.reviews);
   const loginModal = useLoginModal();
 
+  const { cartQuantity, setCartQuantity } = useAppContext();
+
   const handlePrincipalChange = (url: string) => {
     setMainImage(url);
   }
@@ -70,9 +74,14 @@ const ClientProductPage: React.FC<clientProductPageProps> = ({
       if (error.response.status === 401) {
         loginModal.onOpen();
       }
+    }).then((response) => {
+      if (response?.status === 200) {
+        toast.success('Produit ajouté au panier');      
+        setCartQuantity(response.data.quantity);
+      }
     });
-  };
-
+  }
+      
   const handleUpdateQuantity = (int: number) => {
     if (productQuantity + int > 0 && productQuantity + int < 11) {
       setProductQuantity(productQuantity + int);

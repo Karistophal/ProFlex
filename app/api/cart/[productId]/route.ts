@@ -20,11 +20,6 @@ export async function POST(
     const { productId } = params;
     const { quantity, selectedType } = await req.json();   
 
-    const cartItemCount = prisma.cartItem.count({
-        where: {
-            userId: user?.id
-        }
-    });
 
 
 
@@ -60,7 +55,16 @@ export async function POST(
                 quantity: cartItem.quantity + (quantity || 1)
             }
         });
-        return NextResponse.json({ message: "Cart updated" }, { status: 200 });
+        
+        const totalQuantity = await prisma.cartItem.aggregate({
+            _sum: {
+              quantity: true,
+            },
+            where: {
+              userId: user.id,
+            },
+          });
+        return NextResponse.json({ message: "Cart updated", quantity: totalQuantity._sum.quantity });
     }
     // si cartItem n'existe pas, créer un nouveau
     await prisma.cartItem.create({
@@ -71,5 +75,14 @@ export async function POST(
             ...(selectedType && { productTypeId: selectedType }),
         },
     });
-    return NextResponse.json({ message: "Cart updated" });
+     
+    const totalQuantity = await prisma.cartItem.aggregate({
+        _sum: {
+          quantity: true,
+        },
+        where: {
+          userId: user.id,
+        },
+      });
+    return NextResponse.json({ message: "Cart updated", quantity: totalQuantity._sum.quantity });
 }

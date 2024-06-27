@@ -1,19 +1,34 @@
 "use client";
 
+import { CartItem } from '@prisma/client';
 import React, { createContext, useContext, useState } from 'react';
 
+import getCartItems from './actions/getCartItems';
+import getCurrentUser from './actions/getCurrentUser';
+
 interface ContextProviderType {
-  cartQuantity: number;
-  setCartQuantity: (quantity: number) => void;
+  cart: CartItem[];
+  setCart: React.Dispatch<React.SetStateAction<CartItem[]>>;
+  getCart: () => Promise<void>;
 }
 
 const AppContext = createContext<ContextProviderType | undefined>(undefined);
 
 export const ContextProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [cartQuantity, setCartQuantity] = useState<number>(1);
+  const [cart, setCart] = useState<CartItem[]>([]);
+
+  const getCart = async () => {
+    const user = await getCurrentUser();
+    if (!user) {
+      return;
+    }
+    const cartItems = await getCartItems(user?.id);
+    setCart(cartItems? cartItems : []);
+  }
+    
 
   return (
-    <AppContext.Provider value={{ cartQuantity, setCartQuantity }}>
+    <AppContext.Provider value={{ cart, setCart, getCart }}>
       {children}
     </AppContext.Provider>
   );

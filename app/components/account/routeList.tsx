@@ -23,9 +23,11 @@ const RouteList: React.FC<RouteListProps> = ({ focus, user }) => {
         <div className="text-2xl font-bold">
           Mon compte
         </div>
-        <div className="my-2">
-          <Image src={user?.image ? user.image : "/images/default-profile.png"} className="w-24 h-24 rounded-full mx-auto" alt="profile" />
+        {user?.image &&
+          <div className="my-2">
+          <Image src={user.image} className="w-24 h-24 rounded-full mx-auto" alt="profile" width={100} height={100} />
         </div>
+        }
         <div className="text-lg font-bold">
           {user?.name}
         </div>
@@ -38,7 +40,9 @@ const RouteList: React.FC<RouteListProps> = ({ focus, user }) => {
       </div>
       <RouteElement name="Mes informations" icon={User} route="/account/profil" light={focus === "profil"} />
       <RouteElement name="Confidentialité" icon={Shield} route="/account/privacy" light={focus === "privacy"} />
-      <div className="text-red-500"><RouteElement name="Déconnexion" icon={LogOut} route="/" light={focus === "logout"} onClick={() => signOut()} /></div>
+      <div className="text-red-500">
+        <RouteElement name="Déconnexion" icon={LogOut} route="/" light={focus === "logout"} onClick={() => signOut()} />
+      </div>    
     </div>
   )
 }

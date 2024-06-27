@@ -18,7 +18,7 @@ const CartPage = async () => {
 
     if (currentUser) {
         const cartItemsRequest = await getCartItems(currentUser.id);
-        cartItems = cartItemsRequest ? cartItemsRequest : [];
+        cartItems = cartItemsRequest ? cartItemsRequest : []; 
 
         totalPriceFunction()
     }
@@ -36,35 +36,29 @@ const CartPage = async () => {
         totalPrice = sousTotalPrice + taxesPrice
     }
 
-    async function handleCartDelete() {
-        if (currentUser) {
-            const cartItemsRequest = await getCartItems(currentUser.id);
-            cartItems = cartItemsRequest ? cartItemsRequest : [];
-            totalPriceFunction()
-        }
-    }
-
     return (
-        <div className="w-full flex gap-4 px-32 py-10 min-h-[calc(100vh-64px)]">
+        <div className="w-full px-32 py-10 min-h-[calc(100vh-64px)] ">    
             {
                 currentUser ? (
                     <>
                         <div className="flex flex-col items-start w-full">
                             <div className="text-4xl w-full font-bold mb-16">Mon Panier</div>
-                            <div className="flex w-full gap-5">
+                            <div className="flex flex-col w-full gap-5 lg:flex-row">
                                 <div className="flex flex-col min-w-[600px] w-full gap-4 mr-12 h-min-20 rounded-xl">
                                     <div className="text-2xl font-bold">
                                         {cartItems.length} produits
                                     </div>
                                     <Hr />
                                     {cartItems.length > 0 ? (cartItems.map((item, index) => {
-                                        const { product, quantity } = item;
+                                        const { product, quantity, id, productType } = item;
                                         const { name, price } = product;
                                         return (
                                             <>
                                                 <CartItemProps
                                                     key={index}
-                                                    id={product.id}
+                                                    id={id}
+                                                    productId={product.id}
+                                                    {...productType}
                                                     name={name}
                                                     price={price}
                                                     quantity={quantity}
@@ -88,12 +82,15 @@ const CartPage = async () => {
                                     <div className="pb-3 pt-6">
                                         {cartItems.length > 0 && (
                                             cartItems.map((item, index) => {
-                                                const { product, quantity } = item;
+                                                const { product, quantity, productType } = item;
                                                 const { name, price } = product;
                                                 return (
                                                     <div key={index} className="flex justify-between gap-5 pb-2">
                                                         <div className="flex gap-1">
-                                                            <div className="text-lg max-w-32">{name}</div>
+                                                            <div className="">
+                                                                <div className="text-lg max-w-32">{name}</div>
+                                                                {productType && ( <div className="text-sm text-gray-500">{productType.name}</div> )}
+                                                            </div>
                                                             <div className="text-lg">x {quantity}</div>
                                                         </div>
                                                         <div className="text-lg font-bold">{(price*quantity).toFixed(2)}€</div>
