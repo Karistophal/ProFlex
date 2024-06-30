@@ -77,7 +77,6 @@ const ClientProductPage: React.FC<clientProductPageProps> = ({
     }).then((response) => {
       if (response?.status === 200) {
         toast.success('Produit ajouté au panier');      
-        setCart(cart + productQuantity);
       }
     });
   }

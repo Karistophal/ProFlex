@@ -21,7 +21,7 @@ const CartMenu: React.FC<CartMenuProps> = ({ currentUser, closeCart, handleConne
     const router = useRouter();
     const [cartItems, setCartItems] = useState([] as CartItem[]);
 
-    const { cartQuantity, setCartQuantity } = useAppContext();
+    const { cart, setCart } = useAppContext();
 
     useEffect(() => {
         const fetchCartItems = async () => {
