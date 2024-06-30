@@ -28,7 +28,6 @@ const LoginModal = () => {
     const LoginModal = useLoginModal();
 
     const [isLoading, setIsLoading] = useState(false);
-    const { getCart } = useAppContext();
 
     const {
         register,
@@ -55,7 +54,6 @@ const LoginModal = () => {
                 toast.success('Connecté avec succès');
                 router.refresh();
                 LoginModal.onClose();
-                getCart();
             }
             else {
                 toast.error('Erreur lors de la connexion');
