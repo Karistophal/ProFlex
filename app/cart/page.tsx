@@ -37,7 +37,7 @@ const CartPage = async () => {
     }
 
     return (
-        <div className="w-full px-32 py-10 min-h-[calc(100vh-64px)] ">    
+        <div className="w-full px-10 lg:px-32 py-10 min-h-[calc(100vh-64px)] ">    
             {
                 currentUser ? (
                     <>
@@ -77,7 +77,7 @@ const CartPage = async () => {
                                     }
                                 </div>
                                 {/* Panier */}
-                                <div className="flex flex-col h-fit min-w-[350px] p-6 border-gray-300 border-[1px]  rounded-xl  ">
+                                <div className="flex flex-col h-fit min-w-[350px] p-6 border-gray-300 border-[1px] rounded-xl">
                                     <div className="text-2xl font-extrabold">Récapitulatif</div>
                                     <div className="pb-3 pt-6">
                                         {cartItems.length > 0 && (

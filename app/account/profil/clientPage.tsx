@@ -1,5 +1,5 @@
 "use client";
-import AccountModal from '@/app/components/account/accountModal'
+import AccountModal from '@/app/components/account/accountPage'
 
 import Hr from '@/app/components/Hr';
 import Input from '@/app/components/account/input';

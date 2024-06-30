@@ -25,7 +25,7 @@ const Navbar: React.FC<NavbarProps> = ({
     const [isCartOpen, setIsCartOpen] = useState(false);
     const router = useRouter();
     const loginModal = useLoginModal();
-    const { cartQuantity } = useAppContext();
+    const { cart } = useAppContext();
 
     const closeAll = () => {
         setIsUserOpen(false);
@@ -48,7 +48,7 @@ const Navbar: React.FC<NavbarProps> = ({
     }
 
     return (
-        <nav className="relative flex items-center justify-between pr-4 border-b border-gray-300 mt-3 mx-10 py-4 md:justify-between md:items-center">
+        <nav className="relative flex items-center justify-between pr-4 border-b border-gray-300 mt-3 sm:mx-10 py-4 pl-6 md:pl-0 md:justify-between md:items-center">
             <div className="text-2xl font-bold text-gray-800 md:text-3xl cursor-pointer">
                 <div onClick={() => router.push("/")}>ProFlex</div>
             </div>
@@ -62,8 +62,8 @@ const Navbar: React.FC<NavbarProps> = ({
                 </div>
                 <div onClick={toggleCart} className="relative flex items-center justify-center text-gray-600 w-10 h-10 rounded-full cursor-pointer">
                     <ShoppingCart strokeWidth={2.5} />
-                    {cartQuantity > 0 && (
-                        <div className="absolute top-0 right-0 w-4 h-4 bg-red-500 text-white text-xs font-bold rounded-full flex items-center justify-center">{cartQuantity}</div>
+                    {cart.length > 0 && (
+                        <div className="absolute top-0 right-0 w-4 h-4 bg-red-500 text-white text-xs font-bold rounded-full flex items-center justify-center">{cart.length}</div>
                     )}
                 </div>
                 <div className="hidden sm:block">

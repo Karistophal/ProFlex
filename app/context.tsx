@@ -9,7 +9,6 @@ import getCurrentUser from './actions/getCurrentUser';
 interface ContextProviderType {
   cart: CartItem[];
   setCart: React.Dispatch<React.SetStateAction<CartItem[]>>;
-  getCart: () => Promise<void>;
 }
 
 const AppContext = createContext<ContextProviderType | undefined>(undefined);
@@ -17,18 +16,10 @@ const AppContext = createContext<ContextProviderType | undefined>(undefined);
 export const ContextProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [cart, setCart] = useState<CartItem[]>([]);
 
-  const getCart = async () => {
-    const user = await getCurrentUser();
-    if (!user) {
-      return;
-    }
-    const cartItems = await getCartItems(user?.id);
-    setCart(cartItems? cartItems : []);
-  }
-    
+
 
   return (
-    <AppContext.Provider value={{ cart, setCart, getCart }}>
+    <AppContext.Provider value={{ cart, setCart }}>
       {children}
     </AppContext.Provider>
   );

@@ -26,9 +26,9 @@ const Product = ({id, name, price, image, types, reviews }: productInterface) =>
     }
 
     return (
-        <div className="w-60 h-fit flex flex-col items-center gap-2 cursor-pointer" onClick={handleOpenProduct} >
+        <div className="w-52 min-w-52 lg:w-60 h-fit flex flex-col items-center gap-2 cursor-pointer" onClick={handleOpenProduct} >
             { image && image[0] ? (
-                <img className="w-full h-48 rounded-lg object-cover" src={image[0].url} alt={name} />
+                <img className="w-full h-40 lg:h-48 rounded-lg object-cover" src={image[0].url} />
             ) : (
                 <div className="w-full h-48 rounded-lg bg-gray-200"></div>
             )}

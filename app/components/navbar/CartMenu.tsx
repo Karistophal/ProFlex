@@ -54,7 +54,7 @@ const CartMenu: React.FC<CartMenuProps> = ({ currentUser, closeCart, handleConne
     };  
 
     return (
-        <div onMouseLeave={() => closeCart()} className="absolute top-12 right-0 w-80 bg-white rounded-lg flex flex-col gap-2 p-4 z-50 shadow-lg shadow-gray-600">
+        <div onMouseLeave={() => closeCart()} className="absolute top-12 right-0 w-80 bg-white rounded-lg flex flex-col gap-2 p-4 z-50 shadow-lg shadow-black">
             <div className="text-xl font-bold text-center border-b-2 border-gray-300 p-2">
                 Mon panier
             </div>

@@ -16,7 +16,12 @@ const AccountModal: React.FC<AccountModalProps> = ({ title, body, mode, user }) 
     const router = useRouter()    
 
     if (!user || !user.id) {
-        router.push('/')
+        return (
+            <div className="flex min-h-screen mx-20 mt-10">
+                <div className="text-4xl font-bold">Veuillez vous connecter</div>
+                <button onClick={() => router.push('/login')} className="mt-4 bg-primary-500 text-white px-4 py-2 rounded-lg">Se connecter</button>
+            </div>
+        )
     }
 
     return (

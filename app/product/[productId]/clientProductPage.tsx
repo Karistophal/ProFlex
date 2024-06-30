@@ -51,7 +51,7 @@ const ClientProductPage: React.FC<clientProductPageProps> = ({
   const [reviews, setReviews] = useState<ReviewWithUser[]>(product.reviews);
   const loginModal = useLoginModal();
 
-  const { cartQuantity, setCartQuantity } = useAppContext();
+  const { cart, setCart } = useAppContext();
 
   const handlePrincipalChange = (url: string) => {
     setMainImage(url);
@@ -77,7 +77,7 @@ const ClientProductPage: React.FC<clientProductPageProps> = ({
     }).then((response) => {
       if (response?.status === 200) {
         toast.success('Produit ajouté au panier');      
-        setCartQuantity(response.data.quantity);
+        setCart(cart + productQuantity);
       }
     });
   }
@@ -89,25 +89,27 @@ const ClientProductPage: React.FC<clientProductPageProps> = ({
   }
 
   return (
-    <div className="flex flex-col gap-24 w-full justify-center py-20 xl:px-20 md:px-20 px-0">
+    <div className="flex flex-col gap-24 w-full justify-center py-5 pb-10 md:py-20 xl:px-20 md:px-20 px-4">
       <div className="flex h-full w-full items-center lg:flex-row flex-col ">
         <div className="lg:hidden mb-5 text-4xl sm:text-5xl font-bold text-start w-full">{product.name}</div>
         <div className="flex mb-10 flex-col gap-8 lg:w-3/5 w-full md:min-w-[450px] lg:mr-14">
-          <Image src={currentImage} alt="" className="w-full sm:h-[500px] h-[300px] object-cover rounded-3xl" width={500} height={500} />
+          <Image src={currentImage} alt="" className="w-full sm:h-[500px] h-[200px] object-cover rounded-3xl" width={900} height={600} />
           <div className="w-full flex gap-2 overflow-x-auto">
             {product.images.map((img, index) => (
-              <img
-                key={index}
-                src={img.url}
-                alt=""
-                className="w-1/2 md:w-1/4 h-[25vw] sm:h-40 object-cover cursor-pointer border-2 rounded-xl border-transparent hover:border-blue-500"
-                onClick={() => {
-                  handlePrincipalChange(img.url);
-                  handlePreviewImage(img.url);
-                }}
-                onMouseEnter={() => handlePreviewImage(img.url)}
-                onMouseLeave={() => handlePreviewImage(mainImage)}
-              />
+              <Image
+              key={index}
+              src={img.url}
+              alt={product.name}
+              className="w-1/2 md:w-1/4 h-[25vw] sm:h-40 object-cover cursor-pointer border-2 rounded-xl border-transparent hover:border-blue-500"
+              width={300}
+              height={300}
+              onClick={() => {
+                handlePrincipalChange(img.url);
+                handlePreviewImage(img.url);
+              }}
+              onMouseEnter={() => handlePreviewImage(img.url)}
+              onMouseLeave={() => handlePreviewImage(mainImage)}
+            />
             ))}
           </div>
         </div>

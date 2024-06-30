@@ -31,7 +31,7 @@ const UserMenu: React.FC<UserMenuProps> = ({
         
 
     return (
-        <div onMouseLeave={() => closeUserMenu()} className="absolute z-50 top-12 right-0 w-40 bg-white shadow-lg rounded-lg flex flex-col gap-2 p-4">
+        <div onMouseLeave={() => closeUserMenu()} className="absolute z-50 top-12 right-0 w-40 bg-white shadow-lg rounded-lg flex flex-col gap-2 p-4 shadow-black">
             {currentUser ? (
                 <>
                     <MenuItem label="Mon compte" onClick={handleAccount} />

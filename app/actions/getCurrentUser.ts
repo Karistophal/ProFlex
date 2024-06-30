@@ -13,13 +13,13 @@ export async function getSession() {
 // get l'utilisateur actuel
 export default async function getCurrentUser() {
     try {
-        const session = await getSession() 
+        const session = await getSession()
 
         if (!session?.user?.email) { // If no session
             return null
         }
 
-        // Fetch the user from the database
+        // Recherche de l'utilisateur dans la base de données
         const currentUser = await prisma.user.findUnique({
             where: {
                 email: session.user.email
