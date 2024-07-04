@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Button from "../Button";
 
 import { useRouter } from "next/navigation";
 import getCartItems, { deleteCartItem } from "@/app/actions/getCartItems";
 import { SafeUser } from "@/app/types";
 import CartItemSmall from "./CartItem";
-import { CartItem } from "@/app/types";
 
-import { useAppContext } from "@/app/context";
+import { useCartStore } from "@/app/stores/cartStore";
 
 interface CartMenuProps {
     currentUser?: SafeUser | null;
@@ -19,39 +18,30 @@ interface CartMenuProps {
 
 const CartMenu: React.FC<CartMenuProps> = ({ currentUser, closeCart, handleConnect }) => {
     const router = useRouter();
-    const [cartItems, setCartItems] = useState([] as CartItem[]);
 
-    const { cart, setCart } = useAppContext();
+    const { cart, removeFromCart } = useCartStore();
 
-    useEffect(() => {
-        const fetchCartItems = async () => {
-            if (currentUser) {
-                const items = await getCartItems(currentUser.id);
-                items ? setCartItems(items) : setCartItems([]);
-            }
-        };
-
-        fetchCartItems();
-
-        return () => {
-            setCartItems([]);
-        };
-    }, [currentUser]);
-
-    const totalPrice = cartItems.reduce((acc, item) => {
+    const totalPrice = cart.reduce((acc, item) => {
         const { product, quantity } = item;
         const { price } = product;
         return acc + price * quantity;
     }, 0);
 
     async function handleDelete(productId: string) {
-        currentUser && deleteCartItem(productId).then((response) => { console.log(response) });
+        if (currentUser) {
+            try {
+                const response = await deleteCartItem(productId);
+                removeFromCart(productId);
+            } catch (error) {
+            }
+        } else {
+        }
     }
 
     const handleViewCart = () => {
         closeCart();
         router.push("/cart");
-    };  
+    };
 
     return (
         <div onMouseLeave={() => closeCart()} className="absolute top-12 right-0 w-80 bg-white rounded-lg flex flex-col gap-2 p-4 z-50 shadow-lg shadow-black">
@@ -62,7 +52,7 @@ const CartMenu: React.FC<CartMenuProps> = ({ currentUser, closeCart, handleConne
                 <>
                     <div className="flex flex-col gap-2">
                         <div className="flex flex-col gap-2 max-h-60 overflow-y-auto">
-                            {cartItems && cartItems.length > 0 ? (cartItems.map((item) => (
+                            {cart && cart.length > 0 ? (cart.map((item) => (
                                 <CartItemSmall key={item.id} cartItems={item} onDelete={() => handleDelete(item.id)} />
                             ))) : (
                                 <div className="text-center my-8">Votre panier est vide</div>
@@ -70,7 +60,7 @@ const CartMenu: React.FC<CartMenuProps> = ({ currentUser, closeCart, handleConne
 
                         </div>
                         {
-                            cartItems.length > 0 && (
+                            cart.length > 0 && (
                                 <div className="flex justify-between p-2">
                                     <div>Total</div>
                                     <div>{totalPrice.toFixed(2)}€</div>
@@ -80,7 +70,7 @@ const CartMenu: React.FC<CartMenuProps> = ({ currentUser, closeCart, handleConne
                     </div>
                     <div className="flex gap-4">
                         <Button label="Voir le panier" onClick={handleViewCart} small />
-                        
+
                     </div>
                 </>
             ) : (

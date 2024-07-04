@@ -1,8 +1,7 @@
 'use server';
 
-import { NextResponse } from "next/server";
 import prisma from "../libs/prismadb";
-import getCurrentUser from "./getCurrentUser";
+import getCurrentUser, { getSession } from "./getCurrentUser";
 
 
 export default async function getCartItems(userId: string) {
@@ -49,28 +48,33 @@ export default async function getCartItems(userId: string) {
 
 export async function deleteCartItem(productId: string) {
 
+    const session = await getSession();
+    if (!session) {
+        throw new Error("You need to be logged in to delete a cart item");
+    }
     const currentUser = await getCurrentUser();    
     if (!currentUser) {
-        return NextResponse.json({ message: "You need to be logged in to delete cart item" }, { status: 401 });
+        throw new Error("You need to be logged in to delete a cart item");
     }
 
+    console.log("Deleting cart item", productId, currentUser.id);
+    
     try {
         const deletedCount = await prisma.cartItem.deleteMany({
             where: {
                 id: productId,
+                userId: currentUser.id, // Assure-toi que le userId est pris en compte
             }
         });
+        console.log("Deleted cart item", deletedCount);
         
-        // retourne true si un élément a été supprimé
+
         if (deletedCount.count > 0) {
-            console.log(deletedCount);
-            
-            return NextResponse.json({ message: "Cart item deleted", quantity: deletedCount.count}, { status: 200 });
+            return { message: "Cart item deleted", quantity: deletedCount.count };
         } else {
-            return NextResponse.json({ message: "Cart item not found" }, { status: 404 });
+            throw new Error("Cart item not found");
         }
-    }
-    catch (error) {
-        return NextResponse.json({ message: "Error deleting cart item" }, { status: 500 });
+    } catch (error) {
+        throw new Error("Failed to delete cart item");
     }
 }

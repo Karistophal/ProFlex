@@ -3,6 +3,8 @@ import { NextResponse } from "next/server";
 import getCurrentUser from "@/app/actions/getCurrentUser";
 import prisma from "@/app/libs/prismadb";
 
+import { useCartStore } from "@/app/stores/cartStore";
+
 interface IParams {
     productId?: string;
 }
@@ -11,7 +13,7 @@ export async function POST(
     req: Request,
     { params }: { params: IParams }
 ) {
-    const user = await getCurrentUser()
+    const user = await getCurrentUser();
 
     if (!user) {
         return NextResponse.json({ message: "You need to be logged in to add to cart" }, { status: 401 });
@@ -47,42 +49,45 @@ export async function POST(
 
     // si cartItem existe, actualiser la quantité
     if (cartItem) {
-        await prisma.cartItem.update({
+        const fetchProduct = await prisma.cartItem.update({
             where: {
                 id: cartItem.id
             },
             data: {
                 quantity: cartItem.quantity + (quantity || 1)
+            },
+            include: {
+                product: {
+                    include: {
+                        images: true,
+                        productType: true
+                    }
+                }
             }
         });
+        console.log(fetchProduct);
         
-        const totalQuantity = await prisma.cartItem.aggregate({
-            _sum: {
-              quantity: true,
-            },
-            where: {
-              userId: user.id,
-            },
-          });
-        return NextResponse.json({ message: "Cart updated", quantity: totalQuantity._sum.quantity });
+        
+        return NextResponse.json({ message: "Cart updated", object: fetchProduct });
     }
     // si cartItem n'existe pas, créer un nouveau
-    await prisma.cartItem.create({
+
+    const fetchProduct = await prisma.cartItem.create({
         data: {
             quantity: quantity || 1,
             productId: productId,
             userId: user.id,
             ...(selectedType && { productTypeId: selectedType }),
         },
+        include: {
+            product: {
+                include: {
+                    images: true,
+                    productType: true
+                }
+            }
+        }
     });
      
-    const totalQuantity = await prisma.cartItem.aggregate({
-        _sum: {
-          quantity: true,
-        },
-        where: {
-          userId: user.id,
-        },
-      });
-    return NextResponse.json({ message: "Cart updated", quantity: totalQuantity._sum.quantity });
+    return NextResponse.json({ message: "Cart updated", object: fetchProduct });
 }

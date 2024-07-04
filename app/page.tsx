@@ -17,7 +17,7 @@ export default async function Home() {
       {/* Head */}
       <div className="relative w-full h-[30vw] md:h-96 bg-neutral-300 rounded-lg">
         <Image src="https://www.trace-ta-route.com/wp-content/uploads/2020/08/Randonnee-Bauges-Arcalod-24-ascension-Trace-Les-Cimes-1050x700.jpg" alt="head" className="w-full h-full object-cover rounded-lg" height={700} width={1050} /> 
-        <div className="absolute w-full flex flex-col justify-center top-1/2 transform -translate-y-1/2 text-3xl md:text-5xl font-bold text-white text-center">
+        <div className="absolute w-full flex flex-col justify-center top-1/2 transform -translate-y-1/2 text-2xl sm:text-3xl md:text-5xl font-bold text-white text-center text-shadow-md">
           <div>Boostez Votre Performance</div>
           <div>Libérez Votre Potentiel</div>
         </div>
@@ -27,10 +27,10 @@ export default async function Home() {
       {/* categories */}
       <div className="w-full flex flex-col">
         <div className="w-full flex justify-between items-end pb-4">
-          <div className=" text-4xl font-bold">Catégories</div>
-          <Redirect name="View all categories" url="/categories" underline />
+          <div className="text-3xl sm:text-4xl font-bold">Catégories</div>
+          <Redirect name="Voir plus" url="/categories" underline />
         </div>
-        <div className="w-full h-36 lg:h-44 flex gap-4 flex-wrap overflow-hidden">
+        <div className="w-full h-28 sm:h-36 lg:h-44 flex gap-4 flex-wrap overflow-hidden">
           {categories.length > 0 ? (
             categories.map((category) => (
               <Category
@@ -52,9 +52,9 @@ export default async function Home() {
 
       {/* Trending */}
       <div className="w-full flex flex-col">
-        <div className="w-full flex justify-between pb-4">
-          <div className=" text-4xl font-bold">Tendances</div>
-          <Redirect name="View more" url="/trending" underline />
+        <div className="w-full flex justify-between items-end pb-4">
+          <div className="text-3xl sm:text-4xl font-bold">Tendances</div>
+          <Redirect name="Voir plus" url="/trending" underline />
         </div>
         <div className="w-full h-50 flex gap-4 flex-wrap overflow-hidden">
           { trending?.length > 0 ? ( 

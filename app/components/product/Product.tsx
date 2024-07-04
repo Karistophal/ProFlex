@@ -26,13 +26,13 @@ const Product = ({id, name, price, image, types, reviews }: productInterface) =>
     }
 
     return (
-        <div className="w-52 min-w-52 lg:w-60 h-fit flex flex-col items-center gap-2 cursor-pointer" onClick={handleOpenProduct} >
+        <div className="w-[calc(50%-0.5rem)] sm:w-52 sm:min-w-52 lg:w-60 sm:h-fit flex flex-col items-center gap-2 cursor-pointer" onClick={handleOpenProduct} >
             { image && image[0] ? (
-                <img className="w-full h-40 lg:h-48 rounded-lg object-cover" src={image[0].url} />
+                <img className="w-full h-[30svw] sm:h-40 lg:h-48 rounded-md sm:rounded-lg object-cover" src={image[0].url} />
             ) : (
-                <div className="w-full h-48 rounded-lg bg-gray-200"></div>
+                <div className="w-full h-[30svw] sm:h-40 lg:h-48 rounded-lg bg-gray-200"></div>
             )}
-            <div className="w-full flex flex-col">
+            <div className="w-full flex flex-col flex-1 justify-between">
 
                 {/* Name and price */}
                 <div className="flex justify-between">
@@ -42,7 +42,7 @@ const Product = ({id, name, price, image, types, reviews }: productInterface) =>
 
                 {/* Types */}
                 { types ? (
-                <div className="w-40 h-6 ml-2 flex gap-1 overflow-hidden text-gray-500">
+                <div className="w-40 h-6 ml-2 sm:block flex gap-1 overflow-hidden text-gray-500">
                     {types.map((type) => (
                         <div key={type.id} className="text-sm font-semibold">{type.name}{types.indexOf(type) < types.length - 1 ? ', ' : ''}</div>
                         

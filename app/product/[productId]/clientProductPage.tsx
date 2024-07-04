@@ -5,7 +5,7 @@ import React, { useState } from "react";
 import useLoginModal from "@/app/hook/useLoginModal";
 import axios from "axios";
 import { Review } from "@prisma/client";
-import { useAppContext } from "@/app/context";
+import { useCartStore } from "@/app/stores/cartStore";
 import toast from 'react-hot-toast';
 
 import Reviews from "@/app/components/product/Reviews";
@@ -48,10 +48,10 @@ const ClientProductPage: React.FC<clientProductPageProps> = ({
   const [currentImage, setCurrentImage] = useState(product.images[0]?.url || '');
   const [selectedTypeName, setSelectedTypeName] = useState<string>('' || product.productType[0]?.name);
   const [selectedTypeId, setSelectedTypeId] = useState<string>('' || product.productType[0]?.id);
-  const [reviews, setReviews] = useState<ReviewWithUser[]>(product.reviews);
+  const [loading, setLoading] = useState<boolean>(false);
   const loginModal = useLoginModal();
 
-  const { cart, setCart } = useAppContext();
+  const { cart, addToCart } = useCartStore();
 
   const handlePrincipalChange = (url: string) => {
     setMainImage(url);
@@ -65,27 +65,42 @@ const ClientProductPage: React.FC<clientProductPageProps> = ({
     setSelectedTypeId(id);
     setSelectedTypeName(name);
   }
-
+  
   const handleAddToCart = async () => {
-    await axios.post(`/api/cart/${product.id}`, {
+    setLoading(true);
+  
+    axios.post(`/api/cart/${product.id}`, {
       quantity: productQuantity,
       selectedType: selectedTypeId
-    }).catch((error) => {
-      if (error.response.status === 401) {
+    })
+    .then(response => {
+      if (response.status === 200) {
+        addToCart(response.data.object);
+        toast.success('Produit ajouté au panier.');
+      } else {
+        toast.error('Une erreur est survenue.');
+      }
+    })
+    .catch(error => {
+      if (error.response && error.response.status === 401) {
         loginModal.onOpen();
+      } else {
+        console.error(error);
+        toast.error('Une erreur est survenue.');
       }
-    }).then((response) => {
-      if (response?.status === 200) {
-        toast.success('Produit ajouté au panier');      
-      }
+    })
+    .finally(() => {
+      setLoading(false);
     });
   }
-      
+  
+  
+  
   const handleUpdateQuantity = (int: number) => {
     if (productQuantity + int > 0 && productQuantity + int < 11) {
       setProductQuantity(productQuantity + int);
     }
-  }
+  }  
 
   return (
     <div className="flex flex-col gap-24 w-full justify-center py-5 pb-10 md:py-20 xl:px-20 md:px-20 px-4">
@@ -134,7 +149,9 @@ const ClientProductPage: React.FC<clientProductPageProps> = ({
               <span className="w-10 text-center font-bold">{productQuantity}</span>
               <button onClick={() => handleUpdateQuantity(1)} className="h-full px-3 text-blue-500"><Plus size={20} strokeWidth={3} /></button>
             </div>
-            <button className="flex items-center gap-3 bg-blue-500 text-white text-lg font-semibold px-7 py-2 rounded-md" onClick={handleAddToCart} >
+            <button className={`flex items-center gap-3 bg-blue-500 text-white text-lg font-semibold px-7 py-2 rounded-md 
+              ${loading ? 'bg-blue-300' : ''}
+              `} onClick={handleAddToCart} disabled={loading}>
               <ShoppingCart size={20} strokeWidth={3} />
               <span className="text-lg sm:text-xl">Add to cart</span>
             </button>

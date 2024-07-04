@@ -19,6 +19,7 @@ const Redirect: React.FC<RedirectProps> = ({ name, url, underline }) => {
                     font-semibold
                     cursor-pointer
                     text-neutral-900
+                    pb-1
                     
                     ${underline ? 'after:content-[""] after:block after:w-full after:h-0.5 after:bg-neutral-800' : ''}
                 `}

@@ -10,8 +10,8 @@ import { Heart, ShoppingCart } from 'lucide-react';
 import useLoginModal from "../../hook/useLoginModal";
 import { useRouter } from "next/navigation";
 import { SafeUser } from "@/app/types";
-
-import { useAppContext } from "@/app/context";
+import { useCartStore } from "@/app/stores/cartStore";
+import getCartItems from "@/app/actions/getCartItems";
 
 
 interface NavbarProps {
@@ -25,7 +25,26 @@ const Navbar: React.FC<NavbarProps> = ({
     const [isCartOpen, setIsCartOpen] = useState(false);
     const router = useRouter();
     const loginModal = useLoginModal();
-    const { cart } = useAppContext();
+    const { cart } = useCartStore();
+
+    const { initCart } = useCartStore();
+    useEffect(() => {
+        const initializeCart = async () => {      
+          if (currentUser) {
+            try {
+              const items = await getCartItems(currentUser.id);
+              if (items) {
+                initCart(items);
+              }
+            } catch (error) {
+              console.error('Failed to fetch cart items:', error);
+            }
+          }
+        };
+      
+        initializeCart();
+      }, [currentUser]); // Ajout de currentUser comme dépendance
+      
 
     const closeAll = () => {
         setIsUserOpen(false);
