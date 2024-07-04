@@ -11,10 +11,6 @@ import toast from 'react-hot-toast';
 import useLoginModal from '../../hook/useLoginModal';
 import useRegisterModal from '../../hook/useRegisterModal';
 
-import getCurrentUser from '@/app/actions/getCurrentUser';
-import getCartItems from '@/app/actions/getCartItems';
-import { useAppContext } from '@/app/context';
-
 import Modal from './Modal';
 import Heading from '../Heading';
 import Input from '../inputs/Input';
