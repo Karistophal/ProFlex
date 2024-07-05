@@ -11,6 +11,7 @@ import { signIn } from 'next-auth/react';
 
 import useRegisterModal from '../../hook/useRegisterModal';
 import useLoginModal from '../../hook/useLoginModal';
+import { useRouter } from 'next/navigation';
 
 import Modal from './Modal';
 import Heading from '../Heading';
@@ -22,6 +23,7 @@ import Button from '../Button';
 const RegisterModal = () => {
     const registerModal = useRegisterModal();
     const loginModal = useLoginModal();
+    const router = useRouter();
 
     const [isLoading, setIsLoading] = useState(false);
 
@@ -44,7 +46,22 @@ const RegisterModal = () => {
         axios.post('/api/register', data)
             .then(() => {
                 registerModal.onClose();
-                toast.success("Compte créé avec succès.");
+                signIn('credentials', {
+                    ...data,
+                    redirect: false
+                })
+                .then((callback) => {
+                    setIsLoading(false);
+        
+                    if (callback?.ok) {
+                        toast.success('Compte créé avec succès.');
+                        router.refresh();
+                        registerModal.onClose();
+                    }
+                    else {
+                        toast.error('Erreur lors de la connexion');
+                    }
+                })
             })
             .catch((error) => {
                 toast.error("Erreur lors de la création du compte.");
