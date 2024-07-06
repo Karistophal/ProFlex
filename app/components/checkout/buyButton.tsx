@@ -51,8 +51,8 @@ export const BuyButton = () => {
                     line_items: lineItems,
                     mode: "payment",
                     payment_method_types: ["card", "link"],
-                    success_url: "http://localhost:3000/success",
-                    cancel_url: "http://localhost:3000/cancel",
+                    success_url: "https://proflex-mu.vercel.app/",
+                    cancel_url: "https://proflex-mu.vercel.app/cart",
                 });
 
                 if (!session.url) {
