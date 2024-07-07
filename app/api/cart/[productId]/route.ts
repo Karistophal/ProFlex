@@ -3,8 +3,6 @@ import { NextResponse } from "next/server";
 import getCurrentUser from "@/app/actions/getCurrentUser";
 import prisma from "@/app/libs/prismadb";
 
-import { useCartStore } from "@/app/stores/cartStore";
-
 interface IParams {
     productId?: string;
 }

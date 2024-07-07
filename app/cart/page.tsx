@@ -105,16 +105,16 @@ const CartPage = async () => {
                                                 <div className="text-lg text-gray-500">Sous-total</div>
                                                 <div className="text-lg font-bold">{sousTotalPrice.toFixed(2)}€</div>
                                             </div>
-                                            <div className="flex justify-between mb-2">
+                                            {/* <div className="flex justify-between mb-2">
                                                 <div className="text-lg text-gray-500">Taxes</div>
                                                 <div className="text-lg font-bold">{taxesPrice.toFixed(2)}€</div>
-                                            </div>
+                                            </div> */}
                                         </div>
                                     </div>
                                     <Hr />
                                     <div className="flex justify-between py-4">
                                         <div className="font-bold text-xl">Total :</div>
-                                        <div className="font-bold text-xl">{totalPrice.toFixed(2)}€</div>
+                                        <div className="font-bold text-xl">{sousTotalPrice.toFixed(2)}€</div>
                                     </div>
                                     <BuyButton />
                                 </div>
