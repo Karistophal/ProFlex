@@ -16,7 +16,7 @@ function loading() {
         </div>
         <div className="w-full h-28 sm:h-36 lg:h-44 flex gap-4 flex-wrap overflow-hidden">
           {[1, 2, 3, 4, 5, 6].map((category) => (
-            <div className="relative min-w-28 sm:min-w-36 lg:min-w-44 h-full bg-neutral-300 rounded-lg flex flex-col items-center justify-between cursor-pointer overflow-hidden animate-pulse">
+            <div className="relative min-w-28 sm:min-w-36 lg:min-w-44 h-full bg-neutral-300 rounded-lg flex flex-col items-center justify-between cursor-pointer overflow-hidden animate-pulse" key={category}>
             </div>
           ))}
         </div>
