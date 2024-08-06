@@ -16,7 +16,7 @@ const config: Config = {
       textShadow: {
         'default': '2px 2px 4px rgba(0, 0, 0, 0.5)',
         'md': '4px 4px 6px rgba(0, 0, 0, 0.5)',
-        'lg': '6px 6px 8px rgba(0, 0, 0, 0.5)',
+        'lg': '6px 6px 10px rgba(0, 0, 0, 0.5)',
       },
     },
   },

@@ -19,7 +19,6 @@ interface productInterface {
 const Product = ({id, name, price, image, types, reviews }: productInterface) => {
 
     const router = useRouter();
-    // Currency format based on browser language
 
     const handleOpenProduct = () => {
         router.push(`/product/${id}`);
@@ -36,8 +35,8 @@ const Product = ({id, name, price, image, types, reviews }: productInterface) =>
 
                 {/* Name and price */}
                 <div className="flex justify-between">
-                    <div className="text-m font-bold">{name}</div>
-                    <div className="text-m font-bold">{price.toFixed(2)}€</div>
+                    <div className="font-bold">{name}</div>
+                    <div className="font-bold">{price.toFixed(2)}€</div>
                 </div>
 
                 {/* Types */}
