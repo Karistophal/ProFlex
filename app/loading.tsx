@@ -30,8 +30,8 @@ function loading() {
           <div className="">Voir plus</div>
         </div>
         <div className="w-full h-50 flex gap-4 flex-wrap overflow-hidden">
-          {[1, 2, 3, 4, 5, 6].map((product) => (
-            <ProductLoad />
+          {[1, 2, 3, 4, 5, 6].map((product, index) => (
+            <ProductLoad key={index} />
           ))}
         </div>
       </div>

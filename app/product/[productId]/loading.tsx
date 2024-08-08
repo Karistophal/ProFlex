@@ -7,7 +7,7 @@ function loading() {
         <div className="flex mb-10 flex-col gap-8 lg:w-3/5 w-full md:min-w-[450px] lg:mr-14 bg-opacity-10 p-4 rounded-md">
           <div className="w-full sm:h-[500px] h-[200px] object-cover rounded-3xl animate-pulse bg-black bg-opacity-10 " />
           <div className="w-full flex gap-2 overflow-x-auto">
-            {[1, 2, 3, 4].map((img, index) => (
+            {[1, 2, 3, 4].map((index) => (
               <div className="w-1/2 md:w-1/4 h-[25vw] sm:h-40 object-cover cursor-pointer border-2 rounded-xl border-transparent hover:border-blue-500 animate-pulse bg-black bg-opacity-10" key={index} />
             ))}
           </div>
